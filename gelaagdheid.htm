@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>
+  Regel: gelaagdheid
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?gelaagdheid.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: gelaagdheid
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  De includegraaf van een systeem moet gelaagd of 'laagbaar' zijn.
+  Elk declaratiebestand beschermt zichzelf tegen meervoudige compilatie 
+  met een interne includebescherming.
+</em>
+</blockquote>
+
+<em>
+<p>
+  Zie ook: 'Large Scale C++ Software Design', par. 4.7.2
+</p>
+</em>
+<p>
+  Laagbare systemen zijn beter onderhoudbaar en in duidelijke 
+  volgorde te bouwen en te testen. Als een systeem niet 
+  laagbaar is betekent dat bovendien dat er directe of indirecte 
+  wederzijdse afhankelijkheden zijn. Dergelijk cyclische afhankelijkheden 
+  zijn slecht voor de onderhoudbaarheid van het systeem. 
+  Het feit dat de includegraaf gelaagd moet zijn en dus geen directe 
+  of indirecte cyclische afhankelijkheden mag bevatten, wil trouwens 
+  niet zeggen dat de modulegraaf of het class-diagram geen wederzijdse 
+  afhankelijkheden mag bevatten. Veel patterns (Visitor, Serializer) 
+  kunnen alleen met (logische) wederzijdse afhankelijkheden worden gemaakt.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

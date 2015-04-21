@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>
+  Regel: enum-test
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?enum-test.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_enum-test">
+<h1>
+  Regel: enum-test
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elk switch-statement dat test op een enumerated-type moet voor elke waarde 
+  van de enumerated een case-label bevatten.
+</em>
+</blockquote>
+
+<p>
+  Houd deze regel wel praktisch; een enumerated-type 
+  met vele tientallen verschillende waarden hoeft natuurlijk niet aan deze regel 
+  te voldoen. Een voorbeeld:
+</p>
+
+<pre>  enum WeekDay
+  { NULL_DAY=-1
+  , DAY_SUNDAY=0
+  , DAY_MONDAY
+  , DAY_TUESDAY
+  , DAY_WEDNESDAY
+  , DAY_THURSDAY
+  , DAY_FRIDAY
+  , DAY_SATERDAY 
+  };
+
+  bool IsWorkingDay( WeekDay day )
+  {
+    bool ret = false;
+
+    switch(day)
+    {
+      case DAY_SUNDAY:
+      case DAY_SATERDAY:
+        ret = false;
+        break;
+
+      case DAG_MONDAY:
+      case DAG_TUESDAY:
+      case DAG_WEDNESDAY:
+      case DAG_THURSDAY:
+      case DAG_FRIDAY:
+        ret = true;
+        break;
+
+      case NULL_DAY:
+      default:
+        throw XSomeException( "invalid value" );
+        break;       
+    }
+
+    return ret;
+  }
+</pre>
+
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

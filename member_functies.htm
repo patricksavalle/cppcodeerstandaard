@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>
+  Regel: member-functies 
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?member_functies.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: member-functies
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Alle memberfuncties worden in principe virtual gedeclareerd.
+</em>
+</blockquote>
+
+<p>
+  Een virtual-memberfunctie kan door subclasses opnieuw worden gedefiniëerd en maakt het mogelijk om
+  later het gedrag van een base-class nog te wijzigen. Omdat er ten tijden van het coderen van de class 
+  onmogelijk kan worden voorzien welke uitbreidingen of veranderingen er later nog aan de class nodig 
+  zullen zijn, moeten alle memberfuncties virtual worden gemaakt om deze wijzigingen later nog 
+  niet uit te sluiten.
+</p>
+<p>
+  De enige reden om een class-operatie niet virtual te declareren is optimalisatie.
+  In principe is de aanroep van een virtuele operatie iets langzamer. In zeldzame
+  gevallen kan het daarom nodig zijn om memberfuncties niet virtual te maken.
+</p>
+<p>
+  Niet alle memberfuncties kunnen virtual worden gemaakt: constructors en operators kunnen
+  niet virtual worden gemaakt.
+</p>
+<p>
+  Een virtuele memberfunctie ziet er als volgt uit:
+</p>
+<pre>  class SomeClass
+  {
+  public:
+    // bla bla 
+
+    <strong>virtual</strong> void Modifier( int );
+    <strong>virtual</strong> int Selector() const;
+
+    // bla bla 
+  };
+</pre>
+
+<p>
+ Zie ook regel:<a href="default-argumentwaarden voor virtuele-functies.htm">
+ Default-argumentwaarden voor virtuele-functies</a>.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academice Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

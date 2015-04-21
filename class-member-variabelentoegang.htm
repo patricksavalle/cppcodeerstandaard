@@ -1,0 +1,105 @@
+<meta>
+<html>
+<head>
+<title>
+  Regel: class-member-variabelentoegang
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+
+<style type="text/css">
+	body { margin-left: 10%; margin-right:10%; }
+</style>
+
+<body fgcolor="black" bgcolor="#F0F0F0">
+
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_class-member-variabelentoegang">
+<h1>
+  Regel: class-member-variabelentoegang
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Member-variabelen van een class worden altijd in de private section 
+  gedeclareerd.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Effective C++', item 20
+</em>
+</p>
+
+<p>
+<em>
+  Zie ook: 'Object-Oriented Design Heuristics', heuristic 2.1, 5.3, 9.2
+</em>
+</p>
+
+<p>
+<em>
+  Zie ook: 'Large Scale C++ Software Design', par. 2.2
+</em>
+</p>
+
+<p>
+  De enige uitzondering hierop zijn classes die C-structures, 
+  SQL-workspaces of andere externe datastructuren representeren. 
+  Een voorbeeld is bijvoorbeeld onderstaande class die een record in 
+  een Btrieve-table representeert:
+</p>
+
+<p>
+  (cmscoddf.h)
+</p>
+
+
+<pre>  #ifndef CMSCODDF_H
+  #define CMSCODDF_H
+
+  #ifdef __cplusplus
+  extern "C" {
+  #endif
+
+  #define SIZ_COD_ITEM          5
+  #define SIZ_COD_VALUE         5
+  #define SIZ_COD_DESCRIPTION   60
+  #define SIZ_COD_REGNLOCATION  1
+
+  #pragma option -a1
+  typedef struct tagCOD
+  {
+    char  Item                 [SIZ_COD_ITEM];
+    char  Value                [SIZ_COD_VALUE];
+    char  Description          [SIZ_COD_DESCRIPTION];
+    char  RegnLocation         [SIZ_COD_REGNLOCATION];
+  }
+  COD;
+
+  #ifdef _cplusplus
+  }
+  #endif
+
+  #endif
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

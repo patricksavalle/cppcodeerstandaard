@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>
+  Regel: typecast-syntaxis
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?typecast-syntaxis.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_typecast-syntaxis">
+<h1>
+  Regel: typecast-syntaxis
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Indien er toch een typecast nodig is, gebruik dan de C++-casting-operators 
+  in plaats van C-stijl- of C++-functiestijl-typecasts.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Effective C++', item 2.
+</em>
+</p>
+
+<p>
+  Het gebruik van de nieuwe C++-casting-operators is veiliger, 
+  duidelijker en explicieter. De nieuwe operators zijn:
+</p>
+
+<p>
+<ul>
+<li>
+  static_cast&lt;type&gt;(variabele) 
+</li>
+<li>
+  const_cast&lt;type&gt;(variabele)
+</li>
+<li>
+  reinterpret_cast&lt;type&gt;(variabele)
+</li>
+<li>
+  dynamic_cast&lt;type&gt;(variabele) 
+</li>
+</ul>
+</p>
+
+<p>
+  De laatste cast-operator gebruikt een "#include &lt;typeinfo.h&gt;" statement 
+  en de RTTI-optie van de compiler.
+</p>
+
+<p>
+  Bedenk wel dat de nieuwe typecast-syntaxis nog niet door alle compilers 
+  wordt ondersteund en daarom minder goed overdraagbare code oplevert.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

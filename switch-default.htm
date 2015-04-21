@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>
+  Regel: switch-default
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?switch-default.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_switch-default">
+<h1>
+  Regel: switch-default
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elk switch-statement moet een default hebben.
+</em>
+</blockquote>
+
+<br>
+
+<p>
+  Het default-label is de ideale plek om het waardebereik van de te 
+  testen variabele te valideren. De volgende constructie zal dus 
+  regelmatig (moeten) voorkomen:
+</p>
+
+<pre>
+  {
+    switch(a)
+    {
+      case 1:
+        // bla bla 
+        break;
+
+      case 2:
+        // bla bla 
+        break;
+
+      default:
+        throw Exception("ongeldig waardebereik . . .");
+        break;
+    }
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

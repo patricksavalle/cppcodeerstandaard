@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>
+  Regel: for-teller
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?for-teller.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_for-teller">
+<h1>
+  Regel: for-teller
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Pas nooit de lopende variabele van een for-lus aan buiten het controle-statement om.
+</em>
+</blockquote>
+
+<p>
+  Een nette for-lus heeft een lopende variabele die het aantal herhalingen van de lus 
+  controleert. Pas deze variabele niet aan binnen het block van de lus. 
+  Kies een andere constructie (while, do-while) als dit wel nodig is. 
+  Gebruik de for-lus dus in principe alleen maar voor lussen waarvan het 
+  aantal herhalingen reeds voor het binnengaan van de lus bekend is. De reden hiervoor 
+  is duidelijkheid: onderhoudbaarheid en overdraagbaarheid naar andere talen.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

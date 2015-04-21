@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>
+  Regel: impliciete typecasts
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?impliciete typecasts.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_impliciete_typecasts">
+<h1>
+  Regel: impliciete typecasts
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Vermijd impliciete typecasts.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'More effective C++', item 21
+</em>
+</p>
+
+<p>
+  De reden hiervoor is duidelijkheid en het uitsluiten van compiler-afhankelijkheden. 
+</p>
+
+<p>
+  Veel onervaren programmeurs hebben het niet eens in de gaten wanneer ze 
+  impliciete typecasts gebruiken; daarom een reeks voorbeelden van impliciete typecasts:
+</p>
+
+
+<pre>  {
+    double a=0;
+    long b=10;
+    unsigned long c=10;
+    int d='x';
+    float e = 10; 
+ 
+    if(b)
+    {
+      // bla bla
+    }
+  }
+</pre>
+
+<p>
+  En dezelfde code nogmaals, maar dan zonder impliciete typecasts:
+</p>
+
+<pre>  {
+    double a=0.0;
+    long b=10L;
+    unsigned long c=10UL;
+    char d='x';
+    float e = 10f;
+
+    if(0L!=b)
+    {
+      // bla bla
+    }
+  }
+</pre>
+
+<p>
+  Een syntaxconstructie die beter wel met een impliciete typecast kan gebeuren, 
+  is de constructie waarbij een afgeleide class naar een zijn base-class wordt 
+  geconverteerd. Als de compiler de constructie zonder typecast namelijk niet toestaat, 
+  is de constructie waarschijnlijk fout! Een voorbeeld:
+</p>
+
+<pre>  class SomeClass : public BaseClass
+  {
+  public:
+    // bla bla
+
+    SomeClass& SomeClass::operator=( const SomeClass& rhs )
+    {
+      if (&rhs!=this)
+      {
+        // legal implicit typecast !!!
+        BaseClass::operator=( rhs );
+
+        // bla bla
+      }
+      return *this;
+    }
+
+    // bla bla
+  };
+</pre>
+
+<p>
+  Een ander voorbeeld:
+</p>
+
+<pre>  class DerivedClass : public BaseClass
+  {
+    // bla bla
+  };
+
+  class GenericServer
+  {
+  public:
+    // bla bla
+
+    void Operation( BaseClass& arg );
+  };
+
+  void main()
+  {
+    DerivedClass   a;
+    GenericServer  b;
+  
+    // legal implicit typecast !!!
+    b.Operation( a );
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

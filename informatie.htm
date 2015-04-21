@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>
+	De Synalyse C++ codeerstandaard
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?informatie.htm">')
+}
+</script>
+<div id="overDiv" style="position:absolute; visibility:hide;z-index:1;"></div>
+<SCRIPT LANGUAGE="JavaScript" SRC="overlib.js"></SCRIPT>
+
+<table border="0" cellspacing="1" width="480">
+  <tr>
+    <td>
+    <h1>De <em>Synalyse</em> C++-codeerstandaard</h1>
+    <center><em><big><big><big>versie 3.3 (21/3/2002)</big></big></em><big></center><br>
+    <table border="0" cellspacing="1">
+      <tr>
+        <td valign="top"><table border="0" cellspacing="1">
+          <tr>
+            <td>
+ 			  <p><b>Dit document bevat een codeerstandaard voor C++ projecten. 
+			  De standaard wordt gepresenteerd als een verzameling regels 
+			  die kunnen worden gebruikt bij een codereview.</b></p><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <h2><font size="3">Van C++ naar UML</font></h2>
+			<p><a href="www.synalyse.com/umlboek.htm" target="synalysewebsite" alt="Klik om de flaptekst te lezen">
+            <img SRC="boekpictogram.jpg" border="0" alt="Van UML naar C++, omslag" align="left" hspace="15" width="100" height="140"></a></p>
+			<p>Deze codeerstandaard <em>en de volledige theorie van het vertalen van een UML-model (objectmodel)
+			naar een gelijkwaardige C++ implemen-tatie</em> worden beschreven in het boek: <strong>Van UML naar C++</strong>, ISBN 90 395 1279 5</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+			  <p><br><b>Opmerkingen kunnen worden gestuurd aan <a href="mailto:cppstd@synalyse.com">Synalyse<a></b></p>
+            </td>
+          </tr>
+        </table>
+        </td>
+        <td width="50"></td>
+        <td width="240"><table border="0" cellspacing="1" cellpadding="5">
+          <tr>
+            <td bgcolor="#F4EA91" valign="top">
+            <b>Gebruiksaanwijzing</b><br>
+			<p>Deze standaard kan worden gebruikt bij codereviews of als houvast. De standaard is verdeeld
+			in vier levels:</p>
+			<ul>
+				<li>
+					<a onMouseOver="overlib('Elk project moet voldoen aan de essentiele regels. Schending van deze regels betekent dat er fouten in de code zitten.')" onMouseOut="nd()" href="cppreferentie.zip">Level-1 (essentieel)
+                    </a>
+				</li>
+				<li>
+					<a onMouseOver="overlib('Elk hoogwaardig project zou moeten voldoen aan deze regels. Schending van deze regels levert niet onmiddelijk problemen op.')" onMouseOut="nd()" href="cppreferentie.zip">Level-2 (verbetering)
+                    </a>
+				</li>
+				<li>
+					<a onMouseOver="overlib('Leesbaarheidsregels zorgen voor leesbare code in eenduidige syntaxis. Code die niet aan deze regels voldoet hoeft niet slechter te zijn dan code die dat wel doet.')" onMouseOut="nd()" href="cppreferentie.zip">Level-3 (leesbaarheid)
+                    </a>
+				</li>
+				<li>
+					<a onMouseOver="overlib('Voorkeursregels leggen een arbitraire keuze vast zodat ieder teamlid dezelfde stijl gebruikt. Code die niet aan deze regels voldoet hoeft niet slechter te zijn dan code die dat wel doet.')" onMouseOut="nd()" href="cppreferentie.zip">Level-4 (voorkeur)
+                    </a>
+				</li>
+			</ul>
+  			<p>Code zou in ieder geval aan de regels van level-1 en level-2 moeten voldoen.</p>
+  			<p>Controleer de code op de volgende kwaliteiten</p>
+			<ul>
+				<li>
+					<a onMouseOver="overlib('Structurele gelijkwaardigheid is de mate waarin de fysieke structuur (include-graaf) van de code overeenkomt met de logische structuur van het class-model waarop de code is gebaseerd. Sleutelwoorden &lt;b&gt;insulatie&lt;/b&gt;, &lt;b&gt;include-graaf&lt;/b&gt;, &lt;b&gt;declaratie/definitie vs. interface/implementatie&lt;/b&gt;.')" onMouseOut="nd()" href="cppreferentie.zip">Structurele gelijkwaardigheid
+                    </a>
+				</li>
+				<li>
+					<a onMouseOver="overlib('Semantische integriteit is de mate waarin code verschrijvingen of vergissingen voorkomt door toepassing van veilige, standaardvormen. Sleutelwoorden: &lt;b&gt;canonieke vormen&lt;/b&gt;, &lt;b&gt;eenvoud&lt;/b&gt;.')" onMouseOut="nd()" href="cppreferentie.zip">Semantische integriteit
+                    </a>
+				</li>
+				<li>
+					<a onMouseOver="overlib('Technische kwaliteit is de manier waarop de code omgaat met fouten situaties en helpt met het opsporen en voorkomen van fouten. Sleutelwoorden: &lt;b&gt;robuustheid&lt;/b&gt;, &lt;b&gt;exception-handling&lt;/b&gt;, &lt;b&gt;instrumentatie.&lt;/b&gt;')" onMouseOut="nd()" href="cppreferentie.zip">Technische kwaliteit
+                    </a>
+				</li>
+				<li>
+					<a onMouseOver="overlib('Syntactische kwaliteit is de manier waarop de code is geschreven.')" onMouseOut="nd()" href="cppreferentie.zip">Syntactische kwaliteit
+                    </a>
+				</li>
+				<li>
+					<a onMouseOver="overlib('Opmaak moet duidelijk en consequent zijn.')" onMouseOut="nd()" href="cppreferentie.zip">Opmaak
+                    </a>
+				</li>
+            </td>
+          </tr>
+        </table>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

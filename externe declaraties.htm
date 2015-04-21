@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>
+  Regel: externe declaraties
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_externe declaraties">
+<h1>
+  Regel: externe declaraties
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Plaats geen externe declaraties in een definitiebestand.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Large Scale C++ Software Design', par. 3.2
+</em>
+</p>
+
+<p>
+  Gebruik een include-statement van de juiste module om declaraties bekend te maken in een definitiebestand. Plaats nooit een externe declaratie in een definitiebestand. Dat is riskant omdat de kans bestaat dat een wijziging van de originele module niet wordt doorgevoerd in de lokaal geplaatste externe declaraties, met alle gevolgen van dien. Het onderstaande voorbeeld toont een (riskante) externe declaratie:
+</p>
+
+<p>
+  (module.cpp)
+</p>
+
+<pre>  // external declarations
+  extern int SOMECONSTANT;
+  void SomeFunction();
+
+  void OtherFunction()
+  {
+    // bla bla
+
+    int a = SOMECONSTANT;
+
+    SomeFunction();
+
+    // bla bla
+  }
+</pre>
+
+<p>
+  De betere constructie is:
+</p>
+
+<p>
+  (module.cpp)
+</p>
+
+<pre>  #ifndef   SOMEMODULE_H
+  #include "somemodule.h"
+  #define   SOMEMODULE_H
+  #endif
+
+  void OtherFunction()
+  {
+    // bla bla
+
+    int a = SOMECONSTANT;
+
+    SomeFunction();
+
+    // bla bla
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

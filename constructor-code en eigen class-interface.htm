@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>
+  Regel: constructor-code
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?constructor-code.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_constructor_code">
+<h1>
+  Regel: constructor-code en eigen class-interface</h1>
+</a>
+    
+<blockquote>
+<em>
+  Een constructor mag geen gebruik maken van de methoden uit eigen class-interface.
+</em>
+</blockquote>
+
+<p>
+  Een constructor mag geen gebruik maken van de interface van zijn eigen class, omdat de class tijdens constructie nog niet in een correcte toestand is en het gebruik van de eigen interface daarom gevaarlijk is! Het aanroepen van virtuele functies vanuit een constructor (of destructor) zal bovendien altijd de door de class zelf gedefinieerde versies van de functies activeren, niet de 'overriding'-versies uit eventuele afgeleide classes! Als de 'overriding'-functie namelijk wel zou kunnen worden aangeroepen vanuit een base-class-constructor dan zou dat kunnen leiden tot fouten omdat het afgeleide object waartoe de 'overriding'-functie behoort op dat moment nog niet is geïnitialiseerd; de base-class-constructor wordt namelijk eerder geactiveerd.
+  De onderstaande stukken code demonstreren hoe onduidelijk het aanroepen van virtuele functies vanuit constructors (en destructors) kan zijn. Het eerste stuk code zal niet eens compileren omdat de constructor van class A geen pure-virtual functie mag aanroepen en de compiler de functie B::print() niet zal (kan) gebruiken!
+</p>
+<pre>  #include &lt;iostream&gt;
+
+  class A
+  {
+  public:
+    A()  
+    { 
+      print(); 
+    }
+    virtual void print() const = 0;
+  };
+
+  class B : public A
+  {
+  public:
+    virtual void print() const 
+    { 
+      cout << "B" << endl; 
+    }
+  };
+
+  void main()
+  {
+    B b;  
+  }
+</pre>
+<p>
+  Ook het onderstaande stuk code doet niet wat de meesten ervan verwachten, het programma zal namelijk een 'A' op het scherm tonen. De constructor van class A zal zijn eigen versie van de printfunctie aanroepen, niet de overriding-versie in class B.
+</p>
+<pre>  #include &lt;iostream&gt;
+
+  class A
+  {
+  public:
+    A()  
+    { 
+      print(); 
+    }
+    virtual void print() const
+    { 
+      cout << "A" << endl; 
+    }
+  };
+
+  class B : public A
+  {
+  public:
+    virtual void print() const 
+    { 
+      cout << "B" << endl; 
+    }
+  };
+
+  void main()
+  {
+    B b;  
+  }
+</pre>
+<p>
+<em>
+  <a href="falende constructor.htm">Zie ook: 'Regel: falende constructor'</a>.
+</em>
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>
+  Regel: preprocessor-macro-implementatie
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?preprocessor-macro-implementatie.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_preprocessor-macro-implementatie">
+<h1>
+  Regel: preprocessor-macro-implementatie
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Voorzie elk argument van een preprocessor-macro in de implementatie van haken!
+</em>
+</blockquote>
+
+<p>
+  Dit is een heel belangrijke regel. Macroargumenten die niet worden voorzien van haken kunnen heel vreemde bijwerkingen geven. Neem als voorbeeld de onderstaande SQR-macro. De macro zou het kwadraat van een getal moeten uitrekenen. De onderstaande code toont de gevaren:
+</p>
+
+<p>
+  Wat is de output van het volgende programma?
+</p>
+
+
+<pre>  #ifndef SQR
+  #define SQR(a)	    (a*a)
+  #endif
+
+  {
+    double c = 10.0;
+    double b = SQR(1.0-c);  // expandeert in: 1-10.0*1.0-10.0 
+  }
+</pre>
+
+<p>
+  Zie 'B.6	Macro-effect2.' voor de oplossing.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>
+  Regel: canonieke class type IV 
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?canonieke class type IV.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: canonieke class type IV 
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Als er in een class (niet-statische) reference-member-variabelen 
+  zijn opgenomen krijgt deze in ieder geval een copy-constructor, 
+  een operator=-member, een virtual destructor en een constructor 
+  die de references initialiseert.
+</em>
+</blockquote>
+
+<p>
+  Een class met reference-attributen kan nooit een default-constructor krijgen omdat dit tot bizarre en gekunstelde 
+  constructies zal leiden (probeer maar eens en houdt rekening met regel:
+  <a href="initialisatie%20class-membervariabelen.htm">initialisatie class-membervariabelen</a>). De 'canonieke' 
+  class voor classes met reference-member-variabelen ziet 
+  er dus als volgt uit:
+</p>
+<pre>  class CanoniekeClass
+  {
+  public:
+    explicit CanoniekeClass( const& SomeClass ref );
+    CanoniekeClass( const CanoniekeClass& org );
+    CanoniekeClass& operator=( const CanoniekeClass& rhs );
+    virtual ~CanoniekeClass();
+  private:
+    // reference-attributen
+  };
+</pre>
+<p>
+  Een default-constructor kan niet worden gegenereerd door de compiler 
+  omdat de reference-member-variabelen moet worden geïnitialiseerd. 
+  De door de compiler gegenereerde default-destructor is fout omdat 
+  deze niet virtueel is. De door de compiler gegenereerde copy-constructor 
+  en operator= zijn fout omdat deze niet de inhoud 'achter' de pointer kopiëren, 
+  maar slechts de pointerwaarde zelf. Hoewel dit soms de bedoeling kan zijn, 
+  is het ontbreken van expliciete afhandeling van deze situatie onduidelijk 
+  en daarom ongewenst.
+</p>
+<p>
+  Constructors met een enkel argument kunnen trouwens door de compiler worden
+  gebruikt voor impliciete type-conversies. Dat kan ongewenst zijn. Zie daarom ook
+  regel: <a href="cast-constructors.htm">cast-constructors</a>. 
+</p>
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academice Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

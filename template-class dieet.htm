@@ -1,0 +1,189 @@
+<html>
+<head>
+<title>
+  Regel: template-class-dieet
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?template-class dieet.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: template-class-dieet
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Alle template-functies die niet afhankelijk zijn van het 
+  template-argument moeten worden ondergebracht in speciaal 
+  daarvoor bestemde base-class.
+</em>
+</blockquote>
+
+<p>
+  Elke keer dat een template met een andere argument wordt gebruikt 
+  danwel geïnstantieerd, creëert de compiler een instantie van 
+  de template (een class). Dat uit zich in gegenereerde code. 
+  Door nu de functies die geen gebruik maken van de template-argumenten 
+  'uit te factoreren' naar een base-class, wordt er minder code 
+  gegenereerd en is bovendien de onderhoudbaarheid beter omdat 
+  de onstane base-class beter is te insuleren. 
+  Een andere heel goede gewoonte is om zoveel mogelijk 
+  template-functionaliteit te delegeren naar een generieke class die de 
+  echte code bevat en werkt met generieke datatypes, zoals void-pointers 
+  en extra sizeof-argumenten. De template kan dan beperkt blijven tot 
+  een schil die slechts dient om 'type' toe te voegen aan de generieke class. 
+  Dit houdt de template zo 'mager' mogelijk, vergemakkelijkt het testen 
+  en het onderhoud en kan bovendien de clients van de template beter 
+  insuleren. Het onderstaande voorbeeld laat dat zien. De template die 
+  hier wordt getoond is een databasetabel die tabellen op ISAM-wijze 
+  (indexed-sequential access-method) kan benaderen. In het betreffende 
+  systeem werden meer dan vijftig tabellen gebruikt en het was dus 
+  belangrijk om de template zo 'licht' mogelijk te houden. Deze 
+  template delegeert al zijn functionaliteit aan een generieke class 
+  en bevat zelf nauwelijks functionaliteit. De member-functies doen 
+  niets anders dan de generieke class aanroepen. De declaratie van 
+  de generieke class is gegeven na de template-definitie.
+</p>
+<pre>  namespace dtb
+  {
+    template &lt:class ConcreteRecord &gt;
+    class Table
+    {
+    public:
+      static void initTable
+        ( const std::string& path
+        , const std::string& owner = string() );
+
+      Table( tbm::OPEN_MODE mode = tbm::OPEN_SHARED )
+      {
+        assert( 0 != mPath.length() );
+        mTabImp.openFile( mPath, mOwner, mode );
+      }
+
+      virtual ~cmsTable( )
+      {
+        mTabImp.closeFile( );
+      }
+
+      void stepRecord( tbm::STEP_MODE stepmode, ConcreteRecord& rec)
+      {
+        mTabImp.stepRecord( &rec, sizeof( rec ), stepmode );
+      }
+
+      void insertRecord( const ConcreteRecord& rec )
+      {
+        mTabImp.insertRecord( &rec, sizeof( rec ) );
+      }
+
+      void updateRecord( const ConcreteRecord& rec )
+      {
+        mTabImp.updateRecord( &rec, sizeof( rec ) );
+      }
+
+      void deleteRecord()
+      {
+        mTabImp.deleteRecord();
+      }
+
+      // bla bla
+
+    private:
+      // disable by not supplying a definition and making private
+      cmsTable( const cmsTable& org );
+      cmsTable& operator=( const cmsTable& org );
+
+      tbm::btrBtrieveTable mTabImp;
+      static std::string mPath;
+      static std::string mOwner;
+    };
+
+    template &lt:class ConcreteRecord&gt;
+    std::string cmsTable&lt:ConcreteRecord&gt;::mPath;
+    template &lt:class ConcreteRecord&gt;
+    std::string cmsTable&lt:ConcreteRecord&gt;::mOwner;
+
+    template &lt:class ConcreteRecord&gt;
+    void cmsTable&lt:ConcreteRecord&gt;::initTable
+      ( const std::string& path
+      , const std::string& owner )
+    {
+      assert( 0 != path.length() );
+      mPath = path;
+      mOwner = owner;
+    }
+  }
+</pre>
+<p>
+  De generieke class met de werkelijke functionaliteit heeft de 
+  volgende declaratie:
+</p>
+<pre>  namespace dtb
+  {
+    class btrBtrieveTable : public tbmAbstractTable
+    {
+    public:
+      btrBtrieveTable();
+      btrBtrieveTable( const btrBtrieveTable& org );
+      btrBtrieveTable& operator=( const btrBtrieveTable& org );
+      virtual ~btrBtrieveTable();
+
+      btrBtrieveTable& openFile
+       ( const std::string& filename
+       , const std::string& ownername
+       , OPEN_MODE open_mode );
+
+      btrBtrieveTable& closeFile( );
+
+      btrBtrieveTable& deleteRecord( );
+
+      btrBtrieveTable& stepRecord
+        ( void* record
+        , int recordlength
+        , STEP_MODE step_mode );
+
+      btrBtrieveTable& insertRecord
+        ( void* record
+        , int recordlength );
+
+      btrBtrieveTable& updateRecord
+        ( void* record
+        , int recordlength );
+
+      // bla bla
+
+    private:
+      char mPosBlk[128];
+    };
+  }
+</pre>
+<p>
+  Het gebruik van deze class direct door clients is af te raden 
+  omdat er geen type-checking is op het type van de argumenten 
+  (dat zijn immers void-pointers), en vergissingen dus niet door 
+  de compiler kunnen worden ontdekt.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>
+  Regel: functie-uitvoering en exception-handling
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?functie-uitvoering en exception-handling.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_functie-uitvoering_en_exception-handling">
+<h1>
+  Regel: functie-uitvoering en exception-handling
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Indien er gebruik gemaakt wordt van exception-handling mag er niet van uit 
+  worden gegaan dat functies normaal terugkeren!
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'The C++ Programming Language, third edition', hfd. 14.4 'resource management'.
+</em>
+</p>
+
+<p>
+  Als er exception-handling wordt gebruikt kan elke functie worden onderbroken 
+  door een exceptie. De functie zal dan niet normaal terugkeren naar de aanroepende code. 
+  Vertrouw daarom nooit op de aanname dat functies volledig zullen worden uitgevoerd 
+  en normaal terugkeren. Het onderstaande fragment toont de risico's:
+</p>
+
+<pre>  void SomeFunction( const char* filename )
+  {
+    assert( 0!=filename );
+    FILE* fp = fopen( filename, "r" );
+    SomeOtherFunction( fp );
+    fclose( fp );
+  }
+</pre>
+
+<p>
+  Deze functie vertrouwt erop dat de functie SomeOtherFunction normaal terugkeert. 
+  Als de functie echter een exceptie genereert, zal het bestand nooit meer worden gesloten. 
+  Dit is een potentieel resource-lek. De oplossing is eenvoudig, een naïeve oplossing 
+  zou kunnen zijn:
+</p>
+
+<pre>  void SomeFunction( const char* filename )
+  {
+    assert( 0!=filename );
+    FILE* fp = fopen( filename, "r" );
+    try
+    {
+      SomeOtherFunction( fp );
+    }
+    catch( ... )
+    {
+      fclose( fp );
+      throw;
+    }
+    fclose( fp );
+  }
+</pre>
+
+<p>
+  Beter is om het alloceren en dealloceren van resources te koppelen aan de 
+  constructor en destructor van een class. De eenvoudigste manier is het laten 
+  representeren van de resource door een class. In het bovenstaande geval kan 
+  gebruik worden gemaakt van de standaard stream-classes:
+</p>
+
+<pre>  void SomeFunction( const char* filename )
+  {
+    assert( 0!=filename );
+    ifstream fp( filename, ios::in );
+    SomeOtherFunction( fp ); 
+  }
+</pre>
+
+<p>
+  De destructor van ifstream zal het bestand altijd sluiten, ook als functie 
+  SomeOtherFunction een exceptie genereert.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

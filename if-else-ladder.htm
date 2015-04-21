@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>
+  Regel: if-else-ladder
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?if-else-ladder.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_if-else-ladder">
+<h1>
+  Regel: if-else-ladder
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Het laatste statement van een if-else-ladder is een else-block.
+</em>
+</blockquote>
+
+<p>
+  Als een if-else-ladder geen afsluitende else heeft, laat dit dan expliciet 
+  zien en noteer een leeg block. De volgende die de code leest weet dan dat 
+  het ontbreken van de else geen vergissing was!
+</p>
+
+<pre>  // onduidelijk 
+  {
+   if(a<0)
+    {
+      // iets 
+    }
+    else if (b<0)
+    {
+      // iets anders 
+    }
+  }
+
+  // duidelijker 
+  {
+   if(a<0)
+    {
+      // iets 
+    }
+    else if (b<0)
+    {
+      // iets anders 
+    }
+    else
+    {}
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<meta>
+<html>
+<head>
+<title>
+  Regel: class-member-variabelen als functieresultaat 
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+
+<style type="text/css">
+	body { margin-left: 10%; margin-right:10%; }
+</style>
+
+<body fgcolor="black" bgcolor="#F0F0F0">
+
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_class-member-variabelen_als_functieresultaat">
+<h1>
+  Regel: class-member-variabelen als functieresultaat 
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Member-functies mogen in principe geen non-const references of 
+  pointers opleveren naar member-variabelen in een class. 
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Effective C++', item 29
+</em>
+</p>
+
+<p>
+<em>
+  Zie ook: 'Object Oriented Design Heuristics', heuristic 2.1, 9.2
+</em>
+</p>
+
+<p>
+<em>
+  Zie ook: 'Large Scale C++ Software Design', par. 6.5.3
+</em>
+</p>
+
+<p>
+<em>
+  Zie ook: 'Design Patterns', blz. 207
+</em>
+</p>
+
+<p>
+  Dit zou betekenen dat de toestand van een class (vastgehouden door 
+  z'n attributen) kan worden veranderd buiten de publieke interface 
+  van de class om en dat is nooit gewenst. De class kan dat soort 
+  toestandsveranderingen nooit controleren of beheersen en het risico 
+  dat de class in een ongeldige toestand kan worden gebracht is aanwezig. 
+  Functies die non-const pointers of references naar data opleveren zijn 
+  in objectgeoriënteerde systemen altijd verdacht.
+</p>
+
+<p>
+  Uitzonderingen hierop zijn speciale (meestal implementatie- of 
+  optimalisatiespecifieke) classes die juist speciaal bedoeld zijn om 
+  het betreffende attribuut te encapsuleren of ondersteunen. Denk hierbij 
+  aan de zogenaamde smart-pointers, beveiligde array's en dergelijke. 
+  Dit soort classes worden ook wel 'handle-classes' of 'proxy-classes' genoemd. 
+  Als voorbeeld van zo'n handle-class geeft het volgende fragment de code 
+  van de auto_ptr van uit de STL:
+</p>
+
+<pre>  template&lt;class X&gt; class auto_ptr
+  {
+  public:
+    explicit auto_ptr (X* p = 0) : the_p(p)           {}
+    auto_ptr (auto_ptr&lt;X&gt;& a)    : the_p(a.release()) {}
+    void operator= (auto_ptr&lt;X&gt;& rhs) { reset(rhs.release()); }
+    ~auto_ptr ()            { delete the_p; }
+    X& operator*() const    { return *the_p; }
+    X* operator-&gt;() const   { return the_p; }
+    X* get() const          { return the_p; }
+    X* release()            { return reset(0); }
+    X* reset(X* p = 0)      { X* tmp = the_p; 
+                              the_p = p; 
+                              return tmp; }
+  private:
+    X* the_p;
+  };
+</pre>
+
+<p>
+  Deze class dient speciaal ter ondersteuning van het enige attribuut 
+  'X* the_p'. Meer over toepassing van deze class in 'Regel: 
+  <a href="falende%20constructor.htm">falende constructor</a>'.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

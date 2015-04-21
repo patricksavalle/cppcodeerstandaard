@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>
+  Regel: externe include-guard
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?externe include-guard.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: externe include-guard
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Bescherm elk declaratiebestand ook tegen meervoudige compilatie door 
+  het plaatsen van een externe includebescherming om het betreffende 
+  include-statement.
+</em>
+</blockquote>
+
+<em>
+<p>
+Zie ook: 'Large Scale C++ Software Design', par. 2.5
+</p>
+</em>
+
+<p>
+  Een op het eerste gezicht wat overbodige constructie kan de 
+  compilatietijden van een groot project behoorlijk verminderen. 
+  De interne includebescherming beschermde het declaratiebestand 
+  al tegen meervoudige compilatie, maar toch moet de compiler 
+  het declaratiebestand eerst helemaal lezen om erachter te komen 
+  welk gedeelte van de declaratie niet moet worden gebruikt 
+  (namelijk dat deel dat wordt beschermd door de interne include-guards 
+  van het betreffende bestand). Het openen, lezen en weer sluiten 
+  van het bestand kost relatief veel tijd. 
+</p>
+<p>
+  De volgende preprocessor-constructie zorgt ervoor dat de declaraties 
+  in een declaratiebestand slechts één keer per module worden geïnclude, 
+  ongeacht de includegraaf van de module:
+</p>
+
+<pre>  #ifndef ...	// interne includebescherming
+  #define ...
+
+  #ifndef   MODULE1_H  	// externe include bescherming 
+  #include &lt;module1.h&gt;
+  #define   MODULE1_H  
+  #endif
+
+  #ifndef   MODULE2_H  
+  #include &lt;module2.h&gt;
+  #define   MODULE2_H  
+  #endif
+
+  // bla bla 
+
+  #endif // ...
+</pre>
+
+<p>
+  Elk include-statement wordt hier beschermd door een 
+  'externe includebescherming'. In principe is het 
+  #define-statement na de #include alleen nodig voor 
+  declaratiebestanden die zelf geen interne include-guards 
+  van het hier gegeven formaat hebben (de meeste externe en 
+  systeemdeclaratiebestanden), maar plaats om vergissingen te 
+  voorkomen altijd de uitgebreide guards.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

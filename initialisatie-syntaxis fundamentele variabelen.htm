@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>
+  Regel: initialisatie-syntaxis fundamentele types
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?initialisatie-syntaxis fundamentele variabelen.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_initialisatie_syntaxis_fundamentele_types">
+<h1>
+  Regel: initialisatie-syntaxis fundamentele types
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Initialiseer variabelen van een fundamenteel type met toekenningssyntaxis, 
+  niet met een constructor-syntaxis. 
+</em>
+</blockquote>
+
+<p>
+Het voorbeeld geeft de geprefereerde syntaxis van initialisatie:
+</p>
+
+<pre>// niet zo!
+{
+  int i( 0 );
+  double d( 0.0 );
+  char c( '\0' );
+}
+
+// maar zo...
+{
+  int i = 0;
+  double d = 0.0;
+  char c = '\0';
+}
+</pre>
+
+<p>
+Sommige compilers zullen de eerste variant niet accepteren.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

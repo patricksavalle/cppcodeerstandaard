@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>
+  Regel: falende destructor
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?falende destructor.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_falende destructor">
+<h1>
+  Regel: falende destructor
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Destructors mogen nooit, direct of indirect, excepties genereren.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'More effective C++', item 11
+</em>
+</p>
+
+<p>
+  Destructors kunnen op twee algemene manieren worden geactiveerd:
+</p>
+
+<p>
+<ul>
+<li>
+  Normaal, als een object uit scope verdwijnt of expliciet wordt vernietigd 
+  door directe aanroep van de destructor of indirecte aanroep van de destructor 
+  via de delete-operator.
+</li>
+<li>
+  Exceptioneel, tijdens de afhandeling van een exceptie, als deze gaat 'terugvallen' 
+  door de aanroepende functies en de bijbehorende scopes worden vernietigd. 
+</li>
+</ul>
+</p>
+
+<p>
+  De laatste situatie is bijzonder omdat als er tijdens het afhandelen van een 
+  exceptie een nieuwe exceptie wordt gegenereerd, er een onduidelijke situatie 
+  ontstaat. Het is dan niet te bepalen welke exceptie voorrang moet krijgen 
+  en C++ zal daarom in zo'n situatie het programma beëindigen door 
+  de terminate()-handler aan te roepen. Omdat een destructor niet kan 
+  bepalen vanuit welke situatie hij werd geactiveerd, mag een destructor dus 
+  geen enkele exceptie genereren, direct of indirect.
+</p>
+
+<p>
+  Als er in een destructor gebruik wordt gemaakt van andere functies, dan moet 
+  dit gebeuren vanuit een "try/catch"-blok dat alle excepties opvangt en afhandelt. 
+  De vraag is of het aanroepen van andere functies vanuit een destructor dan nog 
+  wel verstandig is, want veel meer dan het negeren van de exceptie kan een destructor 
+  meestal toch niet doen. Eigenlijk kunnen alleen functies met een lege 
+  throw-specificatie veilig worden aanroepen. Zie ook: 'Regel: destructor-code'. 
+</p>
+
+<p>
+  Een functie met een lege throw-specificatie ziet er als volgt uit:
+</p>
+
+<pre>  void SomeFunctions() throw();
+</pre>
+
+<p>
+  Elegante syntaxis om alle excepties in een destructor af te vangen is:
+</p>
+
+<pre>  SomeClass::~SomeClass()
+  try
+  {
+    // bla bla
+  }
+  catch( ... )
+  {
+    // no exception may leave a destructor!!!
+  }
+</pre>
+
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

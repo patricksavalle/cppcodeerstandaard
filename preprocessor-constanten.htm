@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>
+  Regel: preprocessor-constanten
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?preprocessor-constanten.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_preprocessor_constanten">
+<h1>
+  Regel: preprocessor-constanten
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Gebruik geen preprocessor-constanten. 
+</em>
+</blockquote>
+
+<p>
+<em>
+Zie ook: 'Effective C++', item 1
+</em>
+</p>
+
+<p>
+<em>
+Zie ook: 'Large Scale C++ Software Design', par. 2.3.4
+</em>
+</p>
+
+<p>
+  De scope van een preprocessor-constante is altijd globaal. 
+  Bovendien zal de preprocessor alle andere lexicale elementen 
+  met dezelfde naam, ongeacht hun scope en functie, expanderen 
+  tot de gedefinieerde waarde. Dit maakt de kans op naamsconflicten 
+  en moeilijk vindbare fouten te groot. In het onderstaande 
+  voorbeeld zal bijvoorbeeld de waarde van de enum-constante 
+  worden veranderd in de waarde van de macro met dezelfde naam. 
+  Deze fout is lastig te vinden als de macro ergens ver weg in 
+  een ander declaratiebestand is gedefinieerd.
+</p>
+
+<pre>  // de preprocessor constante
+  #define RED 1
+
+  class SomeClass
+  {
+    public:
+      enum Colors
+      { RED = 0  // zal expanderen tot 1=0 en vreemde foutmeldingen geven!
+      , BLUE
+      , GREEN
+      };
+
+      ...
+  };
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

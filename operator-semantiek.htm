@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>
+  Regel: operator-semantiek
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?operator-semantiek.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_operator_semantiek">
+<h1>
+  Regel: operator-semantiek
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Overload operators alleen als de semantische betekenis precies hetzelfde blijft.
+</em>
+</blockquote>
+
+<br>
+
+<em>
+Zie ook: 'More effective C++', Item 7.
+<p>
+Zie ook: 'Large Scale C++ Software Design', par. 9.1.1
+</p>
+</em>
+
+<p>
+  De mogelijkheid van operator-overloading is een krachtig hulpmiddel om 
+  duidelijkere code te kunnen schrijven. Dit voordeel wordt echter totaal 
+  om zeep geholpen als de nieuwe operator-overload een geheel andere 
+  betekenis (semantiek) toekent aan de operator. In het slechtste geval 
+  kan de deling-operator ( / ) worden gebruikt om getallen op te tellen...
+</p>
+<p>
+  Wees extra voorzichtig met het overloaden van de operators '&&', '||' 
+  en ','. Overloaden van deze operators zal er voor zorgen dat de 
+  evaluatievolgorde van expressies zal veranderen van 'boolean short-circuit' 
+  naar 'function-evaluation' en dat kan heel vervelende bijwerkingen geven in 
+  expressies die vertrouwen op een bepaalde evaluatievolgorde. 
+</p>
+<p>
+  Zie ook: 'Regel: evaluatievolgorde en boolean short-circuit
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

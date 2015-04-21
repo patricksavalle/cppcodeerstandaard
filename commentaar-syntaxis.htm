@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>
+  Regel: commentaar-syntaxis
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?commentaar-syntaxis.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_commentaar-syntaxis">
+<h1>
+  Regel: commentaar-syntaxis
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Gebruik de // voor commentaar en gebruik geen geneste commentaren.
+</em>
+</blockquote>
+
+<p>
+  Geneste commentaren worden niet door alle compilers begrepen en zijn onduidelijk. 
+  Genest commentaar hoort ook niet thuis in productiecode.
+  Soms moeten er echter tijdelijk grote blokken code worden uitgeschakeld, bijvoorbeeld 
+  voor testdoeleinden, of omdat de code nog niet gereed is. De kans bestaat dat 
+  deze code reeds is voorzien van commentaar. Het omsluiten van het blok code door 
+  commentaarhaken (/* */) kan dan ongewenste effecten geven; bijvoorbeeld omdat 
+  de compiler geen genest commentaar toestaat. Een goede manier om een blok code 
+  uit te schakelen is het gebruiken van onderstaande preprocessor-constructie:
+  </p>
+
+
+<pre>  // even tijdelijk wat code uitschakelen 
+  
+  #pragma message ("code disabled")
+  #if 0
+
+  // bla bla 
+
+  #endif
+
+</pre>
+
+
+<p>
+  Deze constructie werkt namelijk altijd goed, ook wanneer er in het uit te schakelen stuk code andere preprocessor-instructies voorkomen.
+	</p>
+
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

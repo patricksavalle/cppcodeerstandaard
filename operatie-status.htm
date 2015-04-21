@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>
+  Regel: operatie-status
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?operator-status.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_operatie_status">
+<h1>
+  Regel: operatie-status
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Geen enkele functie of member in het systeem mag direct of indirect 
+  het succes of falen van een operatie aangeven door middel van het 
+  functieresultaat of een statusvariabele.
+</em>
+</blockquote>
+
+<p>
+  Als een operatie faalt moet er een exceptie worden gegenereerd. 
+  Het mengen van verschillende systemen van foutafhandeling leidt 
+  tot warrige code en minder robuuste werking. 
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

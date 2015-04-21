@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>
+  Regel: comma-operator
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?comma-operator.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_comma-operator">
+<h1>
+  Regel: comma-operator
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Maak zo min mogelijk gebruik van de comma-operator.
+</em>
+</blockquote>
+
+<p>
+  De comma-operator maakt het mogelijk om meerdere subexpressies te combineren tot één expressie. De expressie heeft als uitkomst de uitkomst van de laatste subexpressie. Dit is handig in for-statements, 
+  waar het soms niet anders kan. Wanneer echter een of andere 'onbenul' het in z'n hoofd haalt om de comma-operator te overloaden, dan is de volgorde van evaluatie niet meer te achterhalen (de compiler gaat dan over op functieaanroepevaluatie). Wees zo iemand te slim af en vermijd de comma-operator. 
+</p>
+
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

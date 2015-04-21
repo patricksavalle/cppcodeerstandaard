@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>
+  Regel: default-argumentwaarden voor virtuele functies
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?default-argumentwaarden voor virtuele-functies.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_default-argumentwaarden_voor_virtuele_functies">
+<h1>
+  Regel: default-argumentwaarden voor virtuele functies
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Virtuele functies of hun overriding functies mogen geen default-argumentwaarden hebben.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Effective C++', item 38
+</em>
+</p>
+
+<p>	
+  Deze regel voorkomt dat overervende classes gaan proberen default-argumentwaarden 
+  aan functies toe te kennen terwijl dit in een base-class ook al was gedaan. 
+  De compiler zal namelijk altijd de default-argumentwaarde van de oorspronkelijke 
+  (base-class) functiedeclaratie nemen. In het onderstaande voorbeeld wordt dit getoond:
+</p>
+
+<pre>  class Base
+  {
+  public:
+    virtual void Operation( int i = 10 );
+  };
+
+  class Derived : public Base
+  {
+  public:
+    virtual void Operation( int i = 20 );
+  }
+
+  void test()
+  {
+    Derived d;
+    d.Operation();			// i == 10 !!!
+  }
+</pre>
+
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

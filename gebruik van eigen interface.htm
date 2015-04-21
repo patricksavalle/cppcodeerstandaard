@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>
+  Regel: gebruik van eigen interface
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?gebruik van eigen interface.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_gebruik_van_eigen_interface">
+<h1>
+  Regel: gebruik van eigen interface
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Een class maakt voor het opvragen en wijzigen van zijn eigen/interne 
+  toestand zoveel mogelijk gebruik van zijn eigen (publieke) interface.
+</em>
+</blockquote>
+
+<p>
+  Een class zal vaak zijn eigen interne toestand moeten veranderen of 
+  opvragen. Maak hiervoor zoveel mogelijk gebruik van zijn eigen interface. 
+  Dit voorkomt redundantie in code.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

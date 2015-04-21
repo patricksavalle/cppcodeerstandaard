@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>
+  Regel: destructor-code
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?destructor-code.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: destructor-code en methoden-aanroepen</h1>
+</a>
+    
+<blockquote>
+<em>
+  Een destructor moet heel voorzichtig zijn met het aanroepen van methoden.
+</em>
+</blockquote>
+
+<p>
+  Een destructor mag net als een constructor geen gebruik maken van de eigen 
+  interface omdat de class tijdens destructie niet meer in een correcte toestand 
+  is en het gebruik van de eigen interface dus gevaarlijk is! 
+</p>
+
+<p>
+  Ook het aanroepen van virtuele functies vanuit de destructor zal altijd de 
+  door de class zelf gedefinieerde versies van de functies activeren, niet de 
+  'overriding'-versies uit eventuele afgeleide classes. 
+</p>
+
+<p>
+  Voor een destructor geldt daarnaast ook nog dat deze eigenlijk helemaal geen 
+  andere functies mag aanroepen vanwege de mogelijkheid dat dit een exceptie 
+  oplevert, hetgeen gevaarlijk is vanuit een destructor (<em>zie regel: <a href="falende destructor.htm">Falende destructor</a></em>). 
+</p>
+
+<em>
+<p>
+Zie ook regel: <a href="constructor-code%20en%20eigen%20class-interface.htm">Constructor-code</a>
+</p>
+</em>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

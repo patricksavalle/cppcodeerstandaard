@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>
+  Regel: canonieke classes
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?canonieke classes.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: canonieke classes
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elke class in het systeem moet een correcte canonieke vorm hebben.
+</em>
+</blockquote>
+
+  <p><a href="canonieke class type I.htm" style="text-decoration: none">
+    Canonieke class type I
+  </a></p>
+  <p><a href="canonieke class type II.htm" style="text-decoration: none">
+    Canonieke class type II
+  </a></p>
+  <p><a href="canonieke class type III.htm" style="text-decoration: none">
+    Canonieke class type III 
+  </a></p>
+  <p><a href="canonieke class type IV.htm" style="text-decoration: none">
+    Canonieke class type IV
+  </a></p>
+  <p><a href="canonieke member-blokkering.htm" style="text-decoration: none">
+    Canonieke member-blokkering
+  </a></p>
+
+<p>
+  De canonieke vorm van een class is het 'standaard karkas'. Het zijn de 
+  niet-functionele elementen die aanwezig moeten zijn om de class robuust te 
+  maken.
+  De canonieke vorm van een class wordt bepaald door de omstandigheden 
+  waarin een class gebruikt wordt. Als een bepaalde omstandigheid 
+  impliceert dat de compiler een copy-constructor nodig heeft, zal 
+  de compiler er een genereren als deze ontbreekt in de class-declaratie en die 
+  hoeft niet per se correct te zijn voor de toepassing van de class. 
+  </p>
+
+<p>
+  Het is niet mogelijk om van tevoren alle situaties te voorzien waarin 
+  een bepaalde class gebruikt gaat worden, daarom moet de class zodanig 
+  zijn geconstrueerd dat deze in elke mogelijke situatie correct 
+  functioneert. Een voorbeeld is de virtuele destructor. In principe 
+  hebben alleen base-classes een virtuele destructor nodig. Als de 
+  virtuele destructor ontbreekt, kunnen afgeleide classes niet veilig 
+  via pointers naar de base-class worden gedealloceerd. Omdat een 
+  programmeur van een class nooit kan weten of een andere programmeur 
+  of constructie zijn class later ooit als base-class gaat gebruiken, 
+  moet dus eigenlijk elke class een virtuele destructor hebben.
+  Soms is het ook niet duidelijk zichtbaar dat de compiler eventueel een 
+  default gaat genereren. Bekijk het onderstaande voorbeeld:
+</p>
+<pre>  class Container
+  {
+    // bla bla
+  };
+
+  class Bundel
+  {
+  public:
+    Bundel( const Bundel& org )
+    : mLijst ( org.mLijst )
+    {}
+
+    // bla bla
+  private:
+    list< Container > mLijst;
+  };
+</pre>
+<p>
+  In dit fragment zal de compiler een copy-constructor voor de Container-class 
+  genereren als de copy-constructor van de Bundel-class wordt gebruikt. 
+  Dit gebeurt indirect via de copy-constructor van de list-class, het type 
+  van de te kopiëren variabele. Als de door de compiler gegenereerde code 
+  niet correct is omdat de Container-class bijvoorbeeld geheugenallocaties 
+  doet, dan zorgt een programmeerfout in de ene class (het vergeten van de 
+  canonieke members) voor een incorrecte werking van een andere class. Dat 
+  is natuurlijk een ongewenste situatie die ervoor zal zorgen dat elke 
+  programmeur afhankelijkheden van code die hij niet zelf heeft gemaakt, 
+  zal vermijden. Een dergelijke kettingreactie is in C++ echter snel 
+  veroorzaakt door alle onzichtbare dingen die de compiler doet. Om deze 
+  reden moeten altijd alle classes in het systeem een correcte canonieke 
+  vorm hebben.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

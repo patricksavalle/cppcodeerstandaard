@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>
+  Regel: nul-pointer
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?nul-pointer.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_nul_pointer">
+<h1>
+  Regel: nul-pointer
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Gebruik 0 om de nul-pointer mee aan te geven, niet NULL.
+</em>
+</blockquote>
+
+<br>
+
+<p>
+  NULL is in C++ toch al gedefinieerd als int(0) en niet zoals 
+  in C als (void*)0. De laatste kan namelijk niet worden 
+  toegekend aan pointers van een ander type zonder typecast 
+  vanwege de strong-typing van C++! 
+  Het onderstaande programma zal voor de meeste compilers 
+  (niet GNU) melden dat het type van NULL inderdaad een int is:
+</p>
+
+<pre>
+  #include <iostream>
+
+  void Type(int)
+  {
+    cout << "Is number.\n";
+  }
+
+  void Type(void*)
+  {
+    cout << "Is pointer.\n";
+  }
+
+  int main()
+  {
+    Type(NULL);
+  } 
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

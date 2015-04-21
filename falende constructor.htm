@@ -1,0 +1,452 @@
+<html>
+<head>
+<title>
+  Regel: falende constructor
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?falende constructor.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_falende_constructor">
+<h1>
+  Regel: falende constructor
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Constructors die falen moeten hun eigen rommel opruimen en kunnen/mogen 
+  daarbij niet vertrouwen op de destructor.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'More effective C++', item 10
+</em>
+</p>
+
+<p>
+  In C++ wordt een destructor van een class alleen aangeroepen als de 
+  constructor volledig kon worden uitgevoerd. Dus: destructors worden in C++ 
+  alleen aangeroepen voor volledig geconstrueerde objecten. Dit betekent dat 
+  wanneer er binnen een constructor direct of indirect een exceptie wordt gegenereerd, 
+  de destructor van het object niet zal worden aangeroepen. Dat kan leiden tot 
+  fouten zoals geheugenlekken; zie het onderstaande voorbeeld:
+</p>
+
+
+<pre>  class XException {};
+
+  class ExceptionThrowingClass
+  {
+  public:
+    ExceptionThrowingClass()
+    {
+      throw XException();
+    }
+  };
+
+  class SomeClass
+  {
+  private:
+    char* a;
+    ExceptionThrowingClass* b;
+  public:
+    SomeClass()
+    : a( new char [10] )
+    , b( new ExceptionThrowingClass )
+    {}
+    ~SomeClass()
+    {
+      delete [] a;
+      delete b;
+    }
+  };
+</pre>
+
+<p>
+  De bovenstaande class heeft een geheugenlek omdat de constructor (indirect) 
+  een exceptie genereert in de tweede allocatie en niet meer het geheugen kan 
+  vrijgeven dat in de eerste allocatie werd gereserveerd. Omdat ook de destructor 
+  niet zal worden aangeroepen, zal het geheugen dus nooit meer worden vrijgegeven. 
+  Eigenlijk is het maar goed ook dat de destructor nooit wordt aangeroepen, want 
+  dan zou de fout niet slechts een geheugenlek zijn, maar een programmacrash. 
+  De destructor zou dan namelijk proberen een ongeïnitialiseerde pointer met een 
+  ongedefinieerde waarde te dealloceren, met een crash als gevolg! De oplossing 
+  is consequent elke constructor in het systeem alle excepties te laten afvangen in 
+  de body van de constructor en z'n eigen 'rommel' te laten opruimen. Om deze 
+  techniek goed te laten werken met allocaties en deallocaties, moeten alle 
+  pointer-member-variabelen in de initialisatielijst eerst op 0 worden gezet, 
+  zodat de delete-operator verderop geen ongeldige deallocaties doet. Volgens 
+  C++-conventie kunnen 0-pointers namelijk veilig worden vernietigd. Er hoeft 
+  dus niet te worden getest op 0-pointers voor de aanroep van de delete-operator 
+  op die pointer. Als volgt:
+</p>
+
+<pre>  class XException {};
+
+  class ExceptionThrowingClass
+  {
+  public:
+    ExceptionThrowingClass()
+    {
+      throw XException();
+    }
+  };
+
+  class SomeClass
+  {
+  private:
+    char* a;
+    ExceptionThrowingClass* b;
+  public:
+    SomeClass()
+    : a( 0 )               // initialize to 0
+    , b( 0 )
+    {
+      try
+      {
+        a = new char [10];
+        b = new ExceptionThrowingClass;
+      }
+      catch(...)
+      {
+        delete [] a;
+        delete b;
+        throw;
+      }
+    } 
+    ~SomeClass()
+    {
+      delete [] a;
+      delete b;
+    }
+  };
+</pre>
+
+<p>
+  Om redundantie in code te voorkomen kan er gebruik worden gemaakt van twee 
+  extra functies: "init" (initialize) en "term" (terminate). Beide functies kunnen 
+  dan ook in de andere constructors en operator= worden gebruikt. Dit ziet er als volgt uit:
+</p>
+
+<pre>  class XException {};
+
+  class ExceptionThrowingClass
+  {
+  public:
+    ExceptionThrowingClass()
+    {
+      throw XException();
+    }
+  };
+
+  class SomeClass
+  {
+  private:
+    char* a;
+    ExceptionThrowingClass* b;
+    void init()
+    {
+      try
+      {
+        a = new char [10];
+        b = new ExceptionThrowingClass;
+      }
+      catch( ... )
+      {
+        term();
+        throw;
+      }
+    }
+    void term()
+    { 
+      delete [] a;
+      delete b;
+    }
+  public:
+    SomeClass()
+    : a( 0 )
+    , b( 0 )
+    {
+      init();
+    }
+    ~SomeClass()
+    {
+      term();
+    }
+  };
+</pre>
+
+<p>
+  Een andere oplossing, die veel minder code vergt, is het vervangen van 
+  pointer-member-variabelen in classes door de speciaal hiervoor ontworpen 
+  auto_ptr-class van de STL-C++-library. Deze auto_ptr dealloceert het geheugen 
+  automatisch wanneer de auto_ptr-variabele zelf uit scope verdwijnt. Deze oplossing 
+  ziet er als volgt uit:
+</p>
+
+<pre>  #ifndef   MEMORY
+  #include &lt;memory&gt;
+  #define   MEMORY
+  #endif
+
+  class XException {};
+
+  class ExceptionThrowingClass
+  {
+  public:
+    ExceptionThrowingClass()
+    {
+      throw XException();
+    }
+  };
+
+  class SomeClass
+  {
+  private:
+    auto_ptr<char> a;
+    auto_ptr<ExceptionThrowingClass> b;
+  public:
+    SomeClass()
+    : a( new char [10] )
+    , b( new ExceptionThrowingClass )
+    {}
+    ~SomeClass()
+    {}
+  };
+</pre>
+
+<p>
+  De truc hierachter is dat wanneer b wordt geconstrueerd, a al een volledig 
+  geconstrueerd object is (van het type auto_ptr). Dus als de exceptie tijdens 
+  constructie van b optreedt, zal de destructor van a (die nu een auto_ptr-class is) 
+  gewoon worden aangeroepen en die kan het geheugen weer vrijgegeven. 
+  Een belangrijk nadeel van deze oplossing is dat pointertypes nu by-value nodig 
+  zijn in het declaratiebestand (vanwege de template-oplossing) en dus niet 
+  meer zijn te insuleren. 
+</p>
+
+<p>
+  Het is géén goede oplossing om te verbieden dat constructors excepties kunnen 
+  genereren. Net als elke andere functie moet een constructor kunnen aangeven 
+  dat hij zijn opdracht niet kon vervullen. Met de bovenstaande technieken kunnen 
+  constructors veilig excepties genereren.
+</p>
+
+<p>
+  Omdat constructors automatisch (en soms onzichtbaar) worden genest door 
+  compositie- of specialisatierelaties, moeten alle classes in het systeem 
+  exception-veilig zijn!
+</p>
+
+<p>
+  De geprefereerde constructor-stijl wordt in het onderstaande voorbeeld gegeven. 
+  Let ook op het zorgvuldige gebruik van copy-constructors! De class in kwestie 
+  heeft twee pointers die in de constructor worden gealloceerd. De class heeft ook 
+  een init en een cleanup (in plaats van 'term') functie.
+</p>
+
+<pre>  class Scanner;
+  class Generator;
+  class Parser
+  {
+  public:
+    Parser();
+    Parser( const Parser& copy );
+    Parser& operator= (const Parser& copy );
+    ~Parser();
+
+    double evaluateExpression ( const string& expression );
+
+  private:
+    Scanner*   Scanner;
+    Generator* Generator;
+    int        TokenType;
+    string     TokenValue;
+    int        CurrentPos;
+    string     Expression;
+
+    void requiredToken ( int TestToken );
+    void syntaxError ();
+    void nextToken ();
+    void primary ();
+    void factor ();
+    void term ();
+    void expression ();
+    void sentence ();
+
+    void init( const Scanner* Scanner, const Generator* Calculator );
+    void cleanup();
+  };
+</pre>
+
+<p>
+  De (gedeeltelijke) implementatie van deze class is:
+</p>
+
+<pre>  #ifndef   PARSER_H
+  #include "Parser.h"
+  #define   PARSER_H
+  #endif
+
+  #ifndef   SCANNER_H
+  #include "scanner.h"
+  #define   SCANNER_H
+  #endif
+
+  #ifndef   GENERATOR_H
+  #include "generator.h"
+  #define   GENERATOR_H
+  #endif
+
+  void Parser::init
+    ( const Scanner* scanner
+    , const Generator* calculator)
+  {
+    try
+    {
+      // call either normal or copy constructor for allocated objects!
+      if (0!=scanner)
+      {
+        Scanner = new Scanner( *scanner );
+      }
+      else
+      {
+        Scanner = new Scanner;
+      }
+      if (0!=calculator)
+      {
+        Calculator =  new Generator( *calculator );
+      }
+      else
+      {
+         Calculator = new Generator;
+      }
+    }
+    catch(...)
+    {
+      cleanup();
+      throw;
+    }
+  }
+
+  void Parser::cleanup()
+  {
+    delete Scanner;
+    Scanner = 0;
+    delete Generator;
+    Generator = 0;
+  }
+
+  Parser::Parser()
+    : Scanner( 0 )
+    , Generator( 0 )
+    , TokenType( 0 )
+    , TokenValue( "" )
+    , CurrentPos( 0 )
+    , Expression( "" )
+  {
+    init( Scanner, Generator );
+  }
+
+  Parser::Parser
+    ( const Parser& copy )
+    : Scanner( 0 )
+    , Generator( 0 )
+    , TokenType( copy.TokenType )
+    , TokenValue( copy.TokenValue )
+    , CurrentPos( copy.CurrentPos )
+    , Expression( copy.Expression )
+  {
+    init( copy.Scanner, copy.Generator );
+  }
+
+  Parser& Parser::operator=( const Parser& rhs )
+  {
+    if (this==&rhs)
+    {
+      return *this;
+    }
+
+    cleanup();
+    init( rhs.Scanner, rhs.Generator);
+
+    TokenType = rhs.TokenType;
+    TokenValue = rhs.TokenValue;
+    CurrentPos = rhs.CurrentPos;
+    Expression = rhs.Expression;
+    return *this;
+  }
+
+  Parser::~Parser()
+  {
+    cleanup();
+  }
+
+  etc. etc...
+</pre>
+
+<p>
+  Let op het verschil in aanroep van de init-functie vanuit de normale constructor 
+  ten opzichte van de copy-constructor! De copy-constructor roept (indirect via 
+  de init-functie) ook de copy-constructors van de gealloceerde objecten aan! 
+  Hetzelfde moet worden gedaan in de operator=-functie. Let ook op het op 0 zetten 
+  van de pointers Scanner en Generator. Dit zorgt ervoor dat de destructor geen 
+  illegale deallocaties zal doen indien de allocaties een exceptie genereren.
+</p>
+
+<p>
+  Tot slot van deze paragraaf nog een fragment met een niet bij iedereen bekende 
+  constructor-syntaxis:
+</p>
+
+<pre>  class SomeClass
+  {
+  public: 
+    SomeClass( const SomeClass& org );
+  private:
+    OtherClass&	other;
+  };
+
+  SomeClass::SomeClass( const SomeClass& org )
+  try
+    : other( org.other )
+  {
+    // bla bla
+  }
+  catch( ... )
+  {
+    // bla bla
+  }
+</pre>
+
+<p>
+  Met een dergelijke constructie kunnen ook excepties die worden gegenereerd 
+  vanuit de initialisatielijst van de constructor, worden opgevangen.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

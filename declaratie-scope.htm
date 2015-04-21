@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>
+  Regel: declaratie-scope
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?declaratie-scope.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_declaratie-scope">
+<h1>
+  Regel: declaratie-scope
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Declareer elk symbool in de kleinst mogelijke scope en stel declaratie indien mogelijk uit tot het punt waarop de variabele ook kan worden geïnitialiseerd.
+</em>
+</blockquote>
+
+<p>
+  Complexiteit van systemen wordt voornamelijk veroorzaakt door onderlinge koppelingen 
+  en afhankelijkheden van de individuele bouwstenen. Alleen door zorgvuldig om te 
+  gaan met deze afhankelijkheden kan complexiteit worden beheerst. Voor symbolen geldt 
+  dat een kleinere scope automatisch een kleiner aantal potentiële afhankelijkheden 
+  oplevert. Scope kan verschillen van global-scope tot aan de zéér lokale scope 
+  van een compound-statement. Zowel functies, classes als variabelen moeten een 
+  zo klein mogelijke scope meekrijgen. Gebruik ook de nieuwe scope van 
+  herhalingsstatements voor nieuwe declaraties! Enkele voorbeelden:
+</p>
+
+<pre>  {
+    while( NotFinished )
+    {
+      int i = 0;
+      int j = 0;
+
+      // bla bla
+    }
+
+    do
+    {
+      int i = 0;
+      int j = 0;
+
+      // bla bla
+    }
+    while( NotFinished );
+
+    for( int i=0, j=0; i<10; i++ )
+    {
+      string s;
+
+      // bla bla
+    }
+  }
+</pre>
+
+<p>
+  Gebruik niet de buitenste scope van het switch-statement om variabelen 
+  te declareren. De variabelen in dit blok kunnen niet worden geïnitialiseerd!
+</p>
+
+<pre>  {
+    int a=0;
+
+    // bla bla 
+
+    switch(a)
+    {
+      // verboden, initialisatie wordt niet uitgevoerd!!! 
+      int b=0;
+
+    case 0:
+      // bla bla 
+      break;
+
+    case 1:
+      {
+        int a = 0;
+        // bla bla 
+      }
+      break;
+
+    default:
+      // bla bla 
+      break;
+    }
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

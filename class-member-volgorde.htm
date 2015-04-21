@@ -1,0 +1,98 @@
+<meta>
+<html>
+<head>
+<title>
+  Regel: class-member-volgorde
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+
+<style type="text/css">
+	body { margin-left: 10%; margin-right:10%; }
+</style>
+
+<body fgcolor="black" bgcolor="#F0F0F0">
+
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_class-member-volgorde">
+<h1>
+  Regel: class-member-volgorde
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Een class declareert z'n types, variabelen, constructors, destructor, 
+  selectors, modifiers en operators per sectie zoveel mogelijk in deze volgorde.
+</em>
+</blockquote>
+
+<p>
+  Een selector is een operatie die de toestand van de class niet verandert. 
+  In C++ zijn dit zogenaamde const-member-functies.
+</p>
+
+<p>
+  Een modifier is een operatie die de toestand van de class wel verandert.
+</p>
+
+<p>
+  Een  operator is een door de class gedeclareerde operator-overload.
+</p>
+
+<pre>  class Circle
+  {
+  public:
+    // tyedefs
+    enum Dummy
+    { DUMMY1
+    , DUMMY2
+    , DUMMY3
+    };
+
+    // ctor's
+    Circle();
+    Circle( const Circle& copy );
+    Circle( int x, int y, int r );
+
+    // dtor
+   ~Circle();
+
+    // selectors
+    double getX() const;
+    double getY() const;
+    double getRadius() const;
+
+    // modifiers
+    Circle& move();
+    Circle& resize();
+
+    // operators
+    Circle& operator=( const Circle& copy );
+    Circle& operator&lt;&lt; (ostream& s);
+    Circle& operator&gt;&gt; (istream& s);
+
+  private:
+    double x;
+    double y;
+    double r;
+  };
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<head>
+<title>
+  Regel: modulenaam
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?modulenaam.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_modulenaam">
+<h1>
+  Regel: modulenaam
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elke logische class wordt in principe gecodeerd in een module met dezelfde naam.
+  Elke module implementeert in principe slechts één logische class.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Large Scale C++ Software Design', par. 3.2
+</em>
+</p>
+
+<p>
+  Het declaratiebestand en het definitiebestand krijgen op de extensie na dezelfde naam. 
+  Speciale classes zoals protocol-classes, inline-classes en template-classes hebben 
+  niet altijd een definitiebestand. In dat geval bestaat de module uit slechts 
+  een declaratiebestand.
+  Indien er wordt gewerkt met namespace behoort ook de namespace tot de classname. 
+  Vaste class-prefixen zoals de 'C' voor elke class-naam in MFC, behoren niet tot 
+  de modulenaam. 
+  De onderstaande tabel toont enkele class-namen en de bijbehorende modulenamen:
+</p>
+
+<table BORDER="1" CELLSPACING="1" BORDERCOLOR="#000000" CELLPADDING="7" WIDTH="472">
+  <tr>
+    <td WIDTH="48%" VALIGN="TOP"><em><b>Class</b></em></td>
+    <td WIDTH="52%" VALIGN="TOP"><em><b>Module</b></em></td>
+  </tr>
+  <tr>
+    <td WIDTH="48%" VALIGN="TOP">CSerializer</td>
+    <td WIDTH="52%" VALIGN="TOP">serializer</td>
+  </tr>
+  <tr>
+    <td WIDTH="48%" VALIGN="TOP">Serializer</td>
+    <td WIDTH="52%" VALIGN="TOP">serializer</td>
+  </tr>
+  <tr>
+    <td WIDTH="48%" VALIGN="TOP">ifr::Serializer</td>
+    <td WIDTH="52%" VALIGN="TOP">ifrserializer</td>
+  </tr>
+  <tr>
+    <td WIDTH="48%" VALIGN="TOP">ifr::CSerializer</td>
+    <td WIDTH="52%" VALIGN="TOP">ifrserializer</td>
+  </tr>
+</table>
+<br>
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

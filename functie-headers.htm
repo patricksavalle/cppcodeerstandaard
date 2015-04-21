@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>
+  Regel: functie-headers
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?functie-headers.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_functie-headers">
+<h1>
+  Regel: functie-headers
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Plaats geen (overdreven) functie-headers voor elke functie.
+</em>
+</blockquote>
+
+<p>
+  Het gebruik van functie-headers is natuurlijk wel netjes, maar omdat er in 
+  de praktijk toch niet genoeg tijd is om de functie-headers te onderhouden 
+  waardoor ze niet (lang) gelijklopen met de functies zelf en omdat functie-headers 
+  de code nogal vertroebelen, wordt aanbevolen om geen functie-headers te gebruiken. 
+  Plaats wel in ieder geval scheidingsregels:
+</p>
+
+<pre>  // ---------------------------------------------------------------- 
+
+  int SomeClass::SomeMember( int a, int b )
+  {
+  	// bla bla
+  }
+
+  // ---------------------------------------------------------------- 
+
+  int SomeClass::SomeOtherMember( int a, int b )
+  {
+  	// bla bla 
+  }
+
+  // ----------------------------------------------------------------
+</pre>
+
+<br>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

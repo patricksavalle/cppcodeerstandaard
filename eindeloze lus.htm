@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>
+  Regel: eindeloze lus
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?eindeloze lus.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_eindeloze_lus">
+<h1>
+  Regel: eindeloze lus
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Codeer een eindeloze lus altijd met een leeg for-statement.
+</em>
+</blockquote>
+
+<p>
+  Wanneer er gebruik wordt gemaakt van exception-handling zal er regelmatig 
+  een oneindige lus moeten worden gebruikt. Gebruik hiervoor het lege for-statement. 
+  Dit statement zal geen compiler-warning genereren; een while-statement 
+  met een constante expressie wel. 
+</p>
+
+<pre>  {
+    // geen compiler warning! 
+    for(;;)
+    {
+        // bla bla 
+    }
+
+    // wel een compiler warning: expression is constant 
+    while(1)
+    {
+        // bla bla 
+    }
+  }
+</pre>
+
+<p>
+  Een iets concreter voorbeeld:
+</p>
+
+<pre>  {
+    try
+    {
+      Record& rec = table.stepFirst();
+      for(;;)
+      {
+        // bla bla
+        rec = table.stepNext();
+      }
+    }
+    catch( XRecordNotFound& )
+    {
+      // bla bla
+    }
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

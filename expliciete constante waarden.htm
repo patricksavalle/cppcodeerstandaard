@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>
+  Regel: expliciete constante waarden
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?expliciete constante waarden.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_expliciete_constante_waarden">
+<h1>
+  Regel: expliciete constante waarden
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Gebruik een constante (geen enum) wanneer er een expliciete numerieke waarde 
+  moet worden geassocieerd met een symbolische naam.
+</em>
+</blockquote>
+
+<p>
+  Anders geformuleerd: gebruik de enum alleen als de specifieke waarden van de 
+  constanten van de enum onbelangrijk zijn.
+</p>
+
+<p>
+  De enum is heel geschikt om een bepaald integraal, niet-numeriek type met 
+  beperkt bereik te simuleren. Wanneer er expliciet waarden worden toegekend 
+  aan de elementen van de enum, is het waarschijnlijk beter om gewoon constanten 
+  te gebruiken. De onderste constructie verdient dan ook de voorkeur.
+</p>
+
+<pre>  // onhandige constructie 
+
+  enum t_ip_port
+  { IPPORT_ECHO=7
+  , IPPORT_DISCARD=9
+  , IPPORT_SYSTAT=11
+  , IPPORT_DAYTIME=13
+  , IPPORT_NETSTAT=15
+  , IPPORT_FTP=21
+  , IPPORT_TELNET=23
+  , IPPORT_SMTP=25
+  , IPPORT_TIMESERVER=37
+  , IPPORT_NAMESERVER=42
+  , IPPORT_WHOIS=43
+  , IPPORT_MTP=57
+  };
+</pre>
+<p>
+De beter constructie is de volgende:
+</p>
+<p>
+(declaratie)
+</p>
+<pre>  // beter zo! 
+  extern const unsigned int IPPORT_ECHO;
+  extern const unsigned int IPPORT_DISCARD;
+  extern const unsigned int IPPORT_SYSTAT;
+  extern const unsigned int IPPORT_DAYTIME;
+  extern const unsigned int IPPORT_NETSTAT;
+  extern const unsigned int IPPORT_FTP;
+  extern const unsigned int IPPORT_TELNET;
+  extern const unsigned int IPPORT_SMTP;
+  extern const unsigned int IPPORT_TIMESERVER;
+  extern const unsigned int IPPORT_NAMESERVER;
+  extern const unsigned int IPPORT_WHOIS;
+  extern const unsigned int IPPORT_MTP;
+</pre>
+<p>
+(definitie)
+</p>
+<pre>  const unsigned int IPPORT_ECHO=7;
+  const unsigned int IPPORT_DISCARD=9;
+  const unsigned int IPPORT_SYSTAT=11;
+  const unsigned int IPPORT_DAYTIME=13;
+  const unsigned int IPPORT_NETSTAT=15;
+  const unsigned int IPPORT_FTP=21;
+  const unsigned int IPPORT_TELNET=23;
+  const unsigned int IPPORT_SMTP=25;
+  const unsigned int IPPORT_TIMESERVER=37;
+  const unsigned int IPPORT_NAMESERVER=42;
+  const unsigned int IPPORT_WHOIS=43;
+  const unsigned int IPPORT_MTP=57;
+</pre>
+
+<p>
+  Opmerking: Denk eraan dat als een enum in global-namespace is gedeclareerd 
+  dat de constanten van de enum ook in global-namespace voorkomen en dus ook 
+  moeten voldoen aan de naamgevingsconventie! Dit impliceert dat de constanten 
+  van de enum als prefix de modulenaam of de naam van het subsysteem moeten krijgen! 
+  Het volgende voorbeeld geeft duidelijk aan waarom dit nodig is. De ene 
+  programmeur heeft bijvoorbeeld de volgende declaratie in global-namespace geplaatst:
+</p>
+
+<pre>  enum t_color
+  { RED
+  , GREEN
+  , BLUE
+  , ORANGE };
+</pre>
+
+<p>
+  Een andere programmeur heeft de volgende declaraties in global-namespace geplaatst:
+</p>
+
+<pre>  enum t_fruit
+  { APPLE
+  , ORANGE
+  , GRAPE
+  , CRANBERRY };
+</pre>
+
+<p>
+  Het is duidelijk dat de subsystemen waarvan deze declaraties deel uitmaken 
+  niet zonder meer samen kunnen worden gebruikt. Er is namelijk een 
+  naamgevingsconflict (ORANGE). Sterker nog, als er inmiddels al andere subsystemen 
+  afhankelijk zijn geworden van deze subsystemen, dan is het bijna onmogelijk 
+  geworden om de subsystemen nog naast elkaar te kunnen gebruiken!
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+
+</body>
+</html>

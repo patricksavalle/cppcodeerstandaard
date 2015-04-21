@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>
+  Regel: ternaire operator
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?ternaire-operator.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_ternaire operator">
+<h1>
+  Regel: ternaire operator
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Gebruik de ternaire ?:-operator alleen indien het syntactisch nodig is. 
+  Gebruik anders een if-else-constructie.
+</em>
+</blockquote>
+
+<p>
+  Het voordeel van het ternaire statement is dat het syntactisch een 
+  expressie (r-value) is, in tegenstelling tot de equivalente 
+  if-else-constructie, die een normaal statement is. Gebruik alleen 
+  in situaties waar het echt nodig is de ternaire operator (te denken 
+  valt aan initialisatie van variabelen). De ternaire ?:-operator is 
+  namelijk niet overdraagbaar naar andere taalsystemen en bovendien lastig 
+  met debuggen; de debugger stapt in een keer door het statement heen 
+  zonder dat duidelijk is aan welke conditie werd voldaan. Gebruik dus 
+  bij voorkeur een if-else-constructie voor de duidelijkheid. Het gebruik 
+  van de ternaire operator is minder storend wanneer de operands constanten 
+  (in plaats van functies) zijn, zoals in het onderstaande fragment:
+</p>
+
+<pre>  a = (b&lt;0) ? 10 : 12
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

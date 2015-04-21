@@ -1,0 +1,141 @@
+<html>
+<head>
+<title>
+  Regel: typecasting const-objects
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?typecasting const-objects.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_typecasting_const-objects">
+<h1>
+  Regel: typecasting const-objects
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Gebruik een typecast van een const naar een niet-const type alleen 
+  als dit de logische const-correctheid van het systeem niet aantast.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Large Scale C++ Software Design', par. 9.1.6
+</em>
+</p>
+
+<p>
+  Het onderstaande voorbeeld toont een situatie waarin het verwijderen van 
+  de constantheid van een variabele door middel van een typecast correct is. 
+  Het voorbeeld is een herschrijving van het eerder gegeven fragment dat 
+  de juiste toepassing van het mutable-keyword demonstreert. Het gebruik 
+  van het mutable-keyword verdient altijd de voorkeur boven de onderstaande 
+  constructie, maar niet alle compilers ondersteunen het keyword.
+</p>
+
+<pre>  class ImageProxy
+  {
+  public:
+    void Rotate()
+    {
+      changed = true;
+
+      // bla bla
+    }
+
+    void Resample( int new_width, int new_height )
+    {
+      changed = true;
+
+      // bla bla
+    }
+
+    void Load( const char* filename )
+    {
+      changed = false;
+
+      // bla bla
+    }
+
+    void Save() const
+    {
+      if (changed)
+      {
+        // use a 'mutable' variable if supported!
+        const_cast&lt;ImageProxy*&gt;(this)->changed = false;
+
+        // bla bla
+      }
+    }
+
+  private:
+    bool changed;
+  };
+</pre>
+
+<p>
+  Goed, wat zal de output van het volgende programma zijn?
+</p>
+
+<p>
+  (riddle.cpp)
+</p>
+
+<pre>  #include &lt;iostream&gt;
+
+  class foo
+  {
+  public:
+    void Print()
+    {
+      cout &lt;&lt; "non-const\n";
+    }
+    void Print() const
+    {
+      cout &lt;&lt; "const\n";
+    }
+  };
+
+  typedef foo * bar;
+
+  int main()
+  {
+    foo x;
+
+    const_cast&lt;const foo *&gt;(&x)->Print();
+    const_cast&lt;foo const *&gt;(&x)->Print();
+    const_cast&lt;foo * const&gt;(&x)->Print();
+    const_cast&lt;const bar&gt;(&x)->Print();
+    const_cast&lt;bar const&gt;(&x)->Print();
+  }
+</pre>
+
+<p>
+  Zie voor de oplossing: 'B.4	To const or not to const'.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

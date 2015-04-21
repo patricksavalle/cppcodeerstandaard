@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>
+  Regel: systeem-const-correctheid
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?systeem const-correctheid">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_systeem-const-correctheid">
+<h1>
+  Regel: systeem-const-correctheid
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Het systeem moet logisch const-correct zijn.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'More effective C++', item 21
+</em>
+</p>
+
+<p>
+<em>
+  Zie ook: 'More effective C++', item 21
+</em>
+</p>
+
+<p>
+  Een systeem is const-correct als functies die alleen const-references 
+  naar een subset van objecten als input hebben, op geen enkele mogelijkheid 
+  een niet-const-versie van een van die objecten kunnen verkrijgen zonder 
+  expliciete typecast. 
+</p>
+
+<p>
+  Een systeem met alleen maar const-correcte classes hoeft als systeem 
+  nog niet const-correct te zijn. De onderstaande classes zijn per class 
+  const-correct, maar als systeem niet (voorbeeld naar 'Large Scale C++ Software 
+  Design', fig. 5-8 en 5-9):
+</p>
+
+
+<pre>  class Edge;
+  class Node
+  {
+  public:
+    // bla bla
+    int getNodeIndex() const;
+    int numberOfEdges() const;
+    Edge& edge( int index ) const;
+    void setName( const char* );
+  };
+
+  class Edge
+  {
+  public:
+    // bla bla
+    Node& toNode() const;
+    Node& fromNode() const;
+  };
+
+  // demonstrate const-incorrectness from system
+  void ConstViolation( const Node& constNode )
+  {
+    Node& nonConstNode( constNode.edge().toNode() );
+
+    // bla bla
+    nonConstNode.setName();
+    // bla bla
+  }
+</pre>
+
+<p>
+  De reden dat deze classes individueel wel maar gezamenlijk niet 
+  const-correct zijn, is dat ze elkaars externe const-correctheid 
+  niet respecteren. In het algemeen geldt trouwens dat const-members 
+  die een non-const-reference naar een object opleveren als 
+  functieresultaat, verdacht zijn!
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

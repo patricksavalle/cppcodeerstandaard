@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>
+  Regel: Cast-constructors
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?cast-constructors.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: Cast-constructors
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elke constructor met een enkel (const-) argument kan door de compiler worden
+  gebruikt voor impliciete type-conversies. Zo'n constructor heet een cast-constructor.
+  Om code voorspelbaar te maken, moet elke cast-constructor worden voorzien van het keyword
+  'explicit'.
+</em>
+</blockquote>
+
+<p>
+  De impliciete type-cast op basis van een constructor wordt in onderstaande fragment
+  getoond.
+</p>
+<pre>  class ClassA
+  {
+  public:
+    ClassA( const& ClassB b );
+    // bla bla
+  };
+
+  void F( const ClassA& );
+
+  void G()
+  {
+    ClassB b;
+
+    // implicit type-cast using ctor
+    F( b );
+  }
+</pre>
+
+<p>
+  Een cast-constructor moet als volgt worden geprogrammeerd:
+</p>
+<pre>  class CanoniekeClass
+  {
+  public:
+    explicit CanoniekeClass( const& SomeClass ref );
+  };
+</pre>
+<p>
+  Deze regel is ook van toepassing op regel: <a href="canonieke class type IV.htm">
+  Canonieke class type IV</a>. 
+</p>
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academice Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

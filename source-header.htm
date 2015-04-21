@@ -1,0 +1,244 @@
+<html>
+<head>
+<title>
+  Regel: source-header
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?source-header.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_source-header">
+<h1>
+  Regel: source-header
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Geef elk bronbestand een standaard header.
+</em>
+</blockquote>
+
+<br>
+
+<p>
+  Om een module snel te kunnen identificeren krijgt elke module een vaste header.
+</p>
+
+<p>
+  De volgende header volgens SCCS-conventie is geschikt voor gebruik met 
+  bijvoorbeeld het TrueChange RCS.
+</p>
+
+
+<pre>
+  // ----------------------------------------------------------------
+  // (C)1999 Lampje bv. All rights reserved        
+  // ----------------------------------------------------------------
+  // Project   : %R%
+  // Module    : %M%
+  // ----------------------------------------------------------------
+  // Change-set: %L%:%B%:%S%
+  // ----------------------------------------------------------------
+  // Doel/beschrijving:
+  //
+  //   
+  //
+  // ----------------------------------------------------------------
+</pre>
+
+<p>
+  Het RCS zal de metasymbolen (%R%, %L% enzovoort) expanderen tot 
+  leesbare tekst met informatie over de module en zijn revisiegeschiedenis.
+</p>
+
+<p>
+  De volgende is geschikt voor gebruik met het Microsoft VSS of Intersolv 
+  PVCS RCS:
+</p>
+
+<pre>
+  // ----------------------------------------------------------------
+  // (C)1999 Lampje bv. All rights reserved        
+  // ---------------------------------------------------------------- 
+  // $Author::                                                      $ 
+  // $Logfile::                                                     $ 
+  // $Date::                                                        $ 
+  //
+  // $Log:                $
+  // 
+  // $NoKeywords$ 
+  // ---------------------------------------------------------------- 
+</pre>
+
+<p>
+  De speciale door dollartekens gemarkeerde keywords worden door het 
+  versiecontrolesysteem geëxpandeerd. In de onderstaande tabel staan 
+  de door Microsoft VSS en Intersolv PVCS herkende keywords:
+</p>
+
+<p>
+<table border="1" width="100%">
+<thead>
+<th>
+  Keyword
+</th>
+<th>
+  Beschrijving
+</th>
+</thead>
+
+<tr>
+<td>
+  $Archive: $
+</td>
+<td>
+  Visual SourceSafe archieflocatie
+</td>
+</tr>
+
+<tr>
+<td>
+  $Author: $
+</td>
+<td>
+ 	gebruiker die bestand het laatst wijzigde
+</td>
+</tr>
+<tr>
+<td>
+  $Date: $
+</td>
+<td>
+  datum en tijd van de oplevering laatste revisie
+</td>
+</tr>
+
+<tr>
+<td>
+  $Header: $
+</td>
+<td>
+ 	logfile, revisie, datum, auteur
+</td>
+</tr>
+
+<tr>
+<td>
+  $History: $
+</td>
+<td>
+ 	revisiegeschiedenis, VSS formaat
+</td>
+</tr>
+
+<tr>
+<td>
+  $Log: $
+</td>
+<td>
+ 	revisiegeschiedenis, RCS format
+</td>
+</tr>
+
+<tr>
+<td>
+  $Logfile: $
+</td>
+<td>
+  zelfde als $Archive: $
+</td>
+</tr>
+
+<tr>
+<td>
+  $Modtime: $
+</td>
+<td>
+  datum en tijd van laatste modificatie
+</td>
+</tr>
+
+<tr>
+<td>
+  $Revision: $
+</td>
+<td>
+  revisienummer
+</td>
+</tr>
+
+<tr>
+<td>
+  $Workfile: $
+</td>
+<td>
+  filenaam
+</td>
+</tr>
+
+<tr>
+<td>
+  $NoKeywords: $
+</td>
+<td>
+  geen keyword-expansion voor regels die volgen
+</td>
+</tr>
+</table>
+<p>
+
+<p>
+  Een voorbeeld van een geëxpandeerde header is het volgende codefragment:
+</p>
+
+<pre>
+  // ----------------------------------------------------------------
+  // (C)1999 Lampje bv. All rights reserved        
+  // ---------------------------------------------------------------- 
+  // $Author:: Savap                                                $ 
+  // $Logfile:: /XLIBS/SEH/SRC/SEH.C                                $ 
+  // $Date:: 3/26/97 4:38p                                          $ 
+  //
+  // $Log: /XLIBS/SEH/SRC/SEH.C $
+  // 
+  // 3     3/18/97 11:43a Savap
+  // Helaas, helaas, een extra globale variabele was nodig. 
+  // Zie revise 4 SEH.H.
+  // 
+  // 2     3/17/97 3:47p Hobbg
+  // Exception stack corrected & enhanced: complete stack-trace since
+  // THROW() which caused it.
+  // 
+  // 1     3/13/97 12:55p Savap
+  // Initiële revisie. Foutloos compileerbaar.
+  //
+  // $NoKeywords$
+  // ----------------------------------------------------------------
+</pre>
+
+<br>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

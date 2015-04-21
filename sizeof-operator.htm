@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>
+  Regel: sizeof-operator
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?sizeof-operator.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_sizeof-operator">
+<h1>
+  Regel: sizeof-operator
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Neem altijd de sizeof van een variabele(-naam), niet van een type(-naam).
+</em>
+</blockquote>
+
+<p>
+  De sizeof-operator kan worden gebruikt met variabelen en met types. 
+  Het gebruik van de sizeof-operator met variabelen is veiliger dan met 
+  types. Als dan de declaratie van de variabele verandert 
+  (de variabele krijgt een ander type), zal de compiler automatisch de 
+  juiste grootte van de veranderde declaratie nemen zonder dat 
+  het sizeof-statement moet worden gewijzigd. Omdat de sizeof vaak in 
+  combinatie met een memset of memcpy wordt gebruikt, is het gebruik van 
+  de variabele toch al handiger, omdat die ook als argument naar die 
+  functies moet worden gebruikt.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>
+  Regel: class-const-correctheid
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?class-const-correctheid.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_class-const-correctheid">
+<h1>
+  Regel: class-const-correctheid
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elke class in het systeem moet logisch intern en extern const-correct zijn.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Effective C++', item 21
+</em>
+</p>
+
+<p>
+<em>
+  Zie ook: 'Large Scale C++ Software Design', par. 9.1.6
+</em>
+</p>
+
+<p>
+Const-correctheid is een middel om te compiler te laten helpen bij het vinden 
+van fouten die te maken hebben met bijwerkingen. Const-correctheid wordt 
+verkregen door de toepassing van het <b>const</b>-keyword.</p>
+
+<p>
+Een class is const-correct als externe functies die als enige argument een const-reference naar een object van die class hebben, niet via aanroepen naar andere functies uit die class een niet-const versie van hetzelfde object kunnen verkrijgen zonder expliciete typecast.
+</p>
+
+<p>
+Bovendien moet het onmogelijk zijn voor externe clients om na aanroep van een 
+const-member of een functie die een const-object van de class als argument 
+heeft, verandering in de toestand van de class te detecteren. Als de interfaces 
+van classes niet goed op elkaar aansluiten met hun interne en externe 
+const-correctheid dan is het soms mogelijk om per ongeluk of moedwillig via een 
+omweg ongewenste toestandsverandering aan te brengen.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>
+  Regel: globale/context-variabelen
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?globale variabelen.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_globale/context-variabelen">
+<h1>
+  Regel: globale/context-variabelen
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elke externe variabele die door een functie wordt gebruikt, moet een argument zijn 
+  van de functie. 
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Effective C++', item 28
+</em>
+</p>
+
+<p>
+<em>
+  Zie ook: 'Object-Oriented Design Heuristics', heuristic 8.1
+</em>
+</p>
+
+<p>
+<em>
+  Zie ook: 'Large Scale C++ Software Design', par. 2.3.1
+</em>
+</p>
+
+<p>
+  (Externe variabelen zijn variabelen die niet tot dezelfde class als de functie behoren.)
+</p>
+
+<p>
+  Om de functie herbruikbaar te maken moet de functie contextonafhankelijk zijn. 
+  Variabelen die worden 'overgenomen' uit een grotere, 'overkoepelende' scope moeten 
+  daarom als argument aan die functie worden doorgegeven.
+</p>
+
+<p>
+  Globale variabelen en variabelen die worden overgenomen uit een grotere scope geven 
+  onzichtbare afhankelijkheden binnen de code. Een functie die gebruik maakt van 
+  dergelijke variabelen is afhankelijk van zijn context en kan nooit worden hergebruikt 
+  binnen een andere context. Gebruik van een globale variabele is ook niet zichtbaar 
+  in het prototype van de functie. 
+</p>
+
+<p>
+  Elke globale variabele kan worden vermeden door een 'zet/geef'-functiepaar. 
+  Het voordeel van het zetten van een variabele via een functie in plaats van direct, 
+  is dat de functie indien nodig veranderde functionaliteit kan onderbrengen; 
+  bijvoorbeeld validaties of notificaties naar andere delen van het systeem.
+</p>
+
+<p>
+  Variabelen die static zijn gedeclareerd in een definitiebestand, zijn geen 
+  globale variabelen, maar moeten om dezelfde redenen ook zoveel mogelijk worden vermeden. 
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

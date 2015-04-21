@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>
+  Regel: expressie-notatie
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?expressie-notatie.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_expressie-notatie">
+<h1>
+  Regel: expressie-notatie
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Schrijf wiskundige expressies altijd zo duidelijk mogelijk op. Gebruik overal haken, 
+ook die voor operators die  onder 'meneer Van Dalen wacht op antwoord' vallen.
+</em>
+</blockquote>
+
+<p>
+  Het is mogelijk om wiskundige expressies in verregaande mate te 'comprimeren'. 
+  Doe dit niet: er wordt niets mee gewonnen, want de optimizer kan dat ook. Er 
+  wordt wel ingeleverd aan duidelijkheid en leesbaarheid.
+</p>
+
+<p>
+  Iedereen kent de prioriteit van machtsverheffen, vermenigvuldigen, delen, 
+  optellen en aftrekken maar schrijf toch alle haken op omdat dan de 
+  evaluatievolgorde niet verandert als de operators worden geoverload (in dat 
+  geval gaat de compiler over op functieeveluatievolgorde in plaats van 
+  meneer-van-Dalen-wacht-op-antwoord).
+</p>
+
+<p>
+  De evaluatievolgorde van subexpressies binnen expressies is niet altijd voor de hand liggend. 
+  Het onderstaande voorbeeld glipt zelfs door de mazen van de taaldefinitie. 
+  De evaluatievolgorde van onderstaande expressie is ongedefinieerd:
+</p>
+
+<pre>  // undefined!
+  {
+    int i = 1;
+    v[i] = i++; 		// V[1] can be 1 or 2. Undefined!
+  }
+</pre>
+
+<p>
+  En een onervaren programmeur zou zich ook in de volgende constructie wel 
+  eens kunnen vergissen:
+</p>
+
+<pre>  // unexpected! (testing for a in [0..99])
+  {
+    if (0 <= a <= 99 )	// evaluated as (0<=a)<=99 !!
+    {
+      // bla bla
+    }
+
+    // should be:
+    if (0<=a && a<=99)
+    {
+      // bla bla
+    }
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

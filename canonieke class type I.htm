@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>
+  Regel: canonieke class type I
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?canonieke class type I.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: canonieke class type I
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elke class krijgt in ieder geval een virtual destructor.
+</em>
+</blockquote>
+
+<br>
+
+<p>
+De meest minimale 'canonieke' class ziet er dus als volgt uit:
+</p>
+<pre>
+  class CanoniekeClass
+  {
+  public:
+    virtual ~CanoniekeClass();
+  };
+</pre>
+<p>
+  Als de class geen member-attributen heeft, is het niet nodig de andere 
+  canonieke members te maken omdat de compiler correcte defaults kan genereren. 
+  De door de compiler gegenereerde default-destructor is fout omdat deze 
+  niet virtueel is. Omdat elke base-class een virtuele destructor moet 
+  hebben en een class nooit zal weten of hij ooit zal worden gebruikt 
+  als base-class, moet dus automatisch elke class een virtuele destructor hebben.
+</p>
+
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>
+

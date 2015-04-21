@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>
+  Regel: variabele argumentlijst
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?variable argumentlijst.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_variabele_argumentlijst">
+<h1>
+  Regel: variabele argumentlijst
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Vermijd functies met een variabel aantal argumenten.
+</em>
+</blockquote>
+
+<p>
+  Fouten in de aanroep van een dergelijke functie kunnen niet door 
+  de compiler worden gedetecteerd en zijn daarom meestal moeilijk 
+  te vinden. Ook de "printf"-functies zijn in principe onveilig. Functies 
+  met een variabel aantal argumenten zijn ook niet uitwisselbaar 
+  met andere taalsystemen en daarom minder portable.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

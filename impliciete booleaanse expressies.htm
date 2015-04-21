@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>
+  Regel: impliciete Booleaanse expressies
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?impliciete booleaanse expressies.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_impliciete_Booleaanse_expressies">
+<h1>
+  Regel: impliciete Booleaanse expressies
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Schrijf elke impliciet aanwezige Booleaanse expressie altijd volledig uit.
+</em>
+</blockquote>
+
+<p>Bijvoorbeeld, elk van de volgende statements is syntactisch correct:</p>
+
+<pre>  {
+    // syntactisch correcte constructies, semantisch niet echt mooi! 
+
+    int a = 0;
+    void* b = 0;
+
+    // bla bla 
+
+    if (a)
+    {
+      // bla bla 
+    }
+
+    if (b)
+    {
+      // bla bla 
+    }
+
+    if (!a)
+    {
+      // bla bla 
+    }
+
+    if (!b)
+    {
+      // bla bla 
+    }
+  }
+</pre>
+
+<p>
+  maar duidelijker is om ze als volgt te schrijven, zonder impliciete typecasts:
+</p>
+
+<pre>  {
+    // syntactisch én semantische correct constructies!
+
+    int a = 0;
+    void* b = 0;
+  
+    // bla bla 
+
+    if (a == 0)
+    {
+      // bla bla 
+    }
+
+    if (b == 0)
+    {
+      // bla bla 
+    }
+
+    if (a != 0)
+    {
+      // bla bla 
+    }
+
+    if (b != 0)
+    {
+      // bla bla 
+    }
+  }
+</pre>
+
+<p>
+  Een probleem dat zich kan voordoen bij eerder gegeven Booleaanse vergelijkingen 
+  is een eenvoudige verschrijving. In het onderstaande voorbeeld is deze gegeven. 
+  De code is syntactisch correct maar zal niet altijd even goed werken:
+</p>
+
+<pre>  {
+    if (a = 0)
+    {
+      // bla bla 
+    }
+  }
+</pre>
+
+<p>
+  Het probleem is dat er een =-teken is vergeten, de expressie is nu altijd false 
+  én de variabele krijgt een waarde toegekend. Schrijf daarom altijd de constanten 
+  in de expressies links! Als er dan een =-teken wordt vergeten, ontstaat er 
+  een syntaxisfout. Het onderstaande voorbeeld is wellicht beter (hoewel minder duidelijk):
+</p>
+
+<pre>  {
+    // syntactisch én semantische correct constructies! 
+
+    int a = 0;
+    void* b = 0;
+  
+    // bla bla 
+
+    if (0 == a)
+    {
+      // bla bla 
+    }
+
+    if (0 == b)
+    {
+      // bla bla 
+    }
+
+    if (0 != a)
+    {
+      // bla bla 
+    }
+
+    if (0 != b)
+    {
+      // bla bla 
+    }
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

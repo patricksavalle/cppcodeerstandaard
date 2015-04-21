@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>
+  Regel: lokale/module-scope declaraties
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?lokale declaraties.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_module_scope_declaraties">
+<h1>
+  Regel: lokale/module-scope declaraties
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Plaats lokale declaraties boven in het definitiebestand, 
+  niet in het declaratiebestand.
+</em>
+</blockquote>
+
+<p>
+  Wees zeer strikt in het zo lokaal mogelijk plaatsen van definities 
+  en declaraties. Elke onnodige declaratie in een declaratiebestand 
+  vergroot de fysieke interface van de class en verslechtert de 
+  insulatie (zie hoofdstuk 8 over Insulatie). Declaraties die niet 
+  tot de interface van de module behoren en slechts in één definitiebestand 
+  worden gebruikt, moeten in het definitiebestand worden geplaatst. 
+  Voor de duidelijkheid moeten ze boven in het definitiebestand worden geplaatst. 
+  Deze regel kan natuurlijk niet gelden voor private-members van classes.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

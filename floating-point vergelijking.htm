@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>
+  Regel: floating-point vergelijking
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?floating-point vergelijking.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_floating-point_vergelijking">
+<h1>
+  Regel: floating-point vergelijking
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Vergelijk nooit direct floating-point getallen op gelijkheid of ongelijkheid.
+</em>
+</blockquote>
+
+<p>
+  Vanwege de aard van floating-point getallen is het gevaarlijk om floating-point 
+  getallen op een exacte waarde te testen. Floating-point getallen hebben namelijk 
+  nooit een exacte waarde, altijd een waarde die zo goed mogelijk in de buurt komt. 
+  De afwijkingen worden groter naarmate de precisie 'achter de komma' groter wordt 
+  of de waarde van het getal groter wordt.
+</p>
+
+<p>
+  De volgende set operator-functions kan worden gebruikt voor het vergelijken 
+  van floating-point getallen
+</p>
+
+
+<pre>  // ------------------------------------------------------- 
+  // 'fix' voor vergelijken van floating point getallen: 
+  // deze zijn in principe _nooit_ _exact_ aan elkaar 
+  // gelijk: kleine afwijkingen zijn toegestaan 
+  // (IEEE specified)                                       
+  // ------------------------------------------------------- 
+  bool operator==( double a, double b )
+  {
+    return ((fabs((a)-(b))<=(2*DBL_EPSILON*(a)) &&  
+            (fabs((a)-(b))<=(2*DBL_EPSILON*(b)));
+  }
+</pre>
+
+<p>
+  De constante DBL_EPSILON is gedeclareerd in <limits.h> (C-RTL) of in 
+  <limits> (STL-C++-RTL) en is het kleinste getal waarvoor geldt: (1.0+DBL_EPSILON != 1.0).
+</p>
+
+<p>
+  Het bovenstaande impliceert ook dat wanneer er groter/kleiner/gelijk-constructies 
+  worden gebruikt, deze altijd eerst op gelijkheid moeten testen! Zie het volgende voorbeeld:
+</p>
+
+<pre>  int f_vergelijk_double( double a, double b )
+  {
+    int ret = 0;
+
+    // altijd eerst op gelijkheid testen met float's, 
+    // maak gebruik van eerder gegeven operator== functie.
+    if(a==b)
+    {
+      ret = 0;
+    }
+    else if(a&lt;b)
+    {
+      ret = -1;
+    }
+    else
+    {
+      ret = 1;
+    }
+
+    return ret;
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

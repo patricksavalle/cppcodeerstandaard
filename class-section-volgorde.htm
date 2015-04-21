@@ -1,0 +1,64 @@
+<meta>
+<html>
+<head>
+<title>
+  Regel: class-section-volgorde
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+
+<style type="text/css">
+	body { margin-left: 10%; margin-right:10%; }
+</style>
+
+<body fgcolor="black" bgcolor="#F0F0F0">
+
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_class-section-volgorde">
+<h1>
+  Regel: class-section-volgorde
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elke class declareert z'n public-, protected- en private-sectie bij 
+  voorkeur in deze volgorde.
+</em>
+</blockquote>
+
+<p>
+  Een voorbeeld:
+</p>
+
+<pre>  class SomeClass
+  {
+  public:
+    SomeClass();
+    SomeClass( const SomeClass& copy );
+    SomeClass& operator=( const SomeClass& copy );
+    virtual ~SomeClass();
+  protected:
+    int protected_member();
+  private:
+    int private_member();
+  };
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>
+  Regel: exceptie-generatie
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?exception-generatie.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_exceptie-generatie">
+<h1>
+  Regel: exceptie-generatie
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Een functie genereert een exceptie wanneer hij niet kan voldoen aan zijn contract, 
+dus niet de gewenste post-conditie kan opleveren of niet de gewenste 
+pre-conditie ontdekt. 
+</em>
+</blockquote>
+
+<p>
+  Een functie die een fout detecteert of niet aan z'n contract kan voldoen, 
+  moet een exceptie genereren en voorzien van een tekst die geschikt is voor 
+  afbeelding aan de gebruiker. Intern maakt de functie ook gebruik van 
+  exception-handling en niet van error-codes of iets dergelijks.
+</p>
+
+<p>
+  Wanneer er gebruik wordt gemaakt van exception-handling, moet worden afgewogen 
+  hoever de exception-handling moet gaan. Wordt het alleen gebruikt voor 
+  fatale fouten? Of worden ook logische condities gestuurd met excepties? 
+  Die vraag is niet eenvoudig te beantwoorden, omdat wat voor de ene client 
+  een fatale fout is, voor de andere gewoon een functionele fout kan zijn. 
+  Op het moment dat een exceptie wordt gegenereerd is nog niet bekend of 
+  de exceptie technisch/fataal of functioneel/herstelbaar is; dat is afhankelijk 
+  van de aanroepcontext. Een paar voorbeelden: als een functie tot doel heeft 
+  het bepalen van het al dan niet aanwezig zijn van een bepaald element in 
+  een verzameling, dan zijn er meerdere mogelijkheden:
+</p>
+
+<p>
+  Een mogelijkheid is:
+</p>
+
+<pre>  bool Set::IsElementPresent( const Element& element )
+  {
+    if (hash.find())
+    {
+      return true;
+    }
+    return false;
+  }
+</pre>
+
+<p>
+  Een andere mogelijkheid is:
+</p>
+
+<pre>  void Set::checkElement ( const Element& element )
+  {
+    if (!hash.find())
+    {
+      throw XElementNotFound();
+    }
+  }
+</pre>
+
+<p>
+  Beide functies zijn correct; welke functie moet worden ingebouwd is afhankelijk 
+  van de context. Een ander voorbeeld is het doorlopen van de inhoud van een set, 
+  de eerste mogelijkheid gebruikt exception-handling ook voor flow-control:
+</p>
+
+<pre>  try
+  {
+    Element& elm = Set.GetFirst();
+    for(;;)
+    {
+      // bla bla
+      elm = Set.GetNext();
+    }
+  }
+  catch( XEndOfSet& )
+  {
+    // nothing
+  }
+</pre>
+
+<p>
+  Een andere mogelijkheid is:
+</p>
+
+<pre>  {
+    Element* elm = 0;
+    if ( Set.GetFirst( elm ) )
+    {
+      while( Set.GetNext( elem ) )
+      {
+        // bla bla
+      }
+    }
+  }
+</pre>
+
+<p>
+  Welke implementatie het beste is, hangt af van de context. Beide soorten 
+  functies kunnen ook naast elkaar bestaan. Het argument dat de laatste mogelijk 
+  de exception-handling omzeilt omdat het een andere methode van foutafhandeling 
+  gebruikt, is niet geldig. Het afgesproken contract van de functies is nu 
+  eenmaal zodanig dat de functie een "false" moet teruggeven als het element niet 
+  kon worden geleverd. Excepties moeten pas worden gegenereerd als de functie niet 
+  aan z'n contract kan voldoen.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

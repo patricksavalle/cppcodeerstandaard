@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>
+  Regel: initialisatie class-member-variabelen
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?initialisatie class-membervariabelen.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_initialisatie_class_member_variabelen">
+<h1>
+  Regel: initialisatie class-member-variabelen
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Initialiseer alle member-variabelen en base-classes(!) van een class 
+  in de 'member-initialization-list' van de constructor(s).
+</em>
+</blockquote>
+
+<em>
+  Zie ook: 'Effective C++', item 12 en 13.
+<p>
+  Zie ook: 'Large Scale C++ Software Design', par. 10.3.5
+</p>
+</em>
+
+<p>
+  Er zijn twee mogelijkheden om value-argumenten van een class te 
+  initialiseren in een constructor. Beschouw bij wijze van 
+  voorbeeld de onderstaande class:
+</p>
+
+<pre>  class ConstructorExample : public BaseClass
+  {
+  private:
+    int i;
+    void* p;
+    ReferenceClass& r;
+    ValueClass v;
+  public:
+    ConstructorExample( ReferenceClass& ref, int x, int y );
+  };
+
+  // alternative 1
+  ConstructorExample::ConstructorExample
+    ( ReferenceClass& ref
+    , int x
+    , int y )
+    : r( ref )
+    , BaseClass( x, y )
+  {
+    i = 0;
+    p = 0;
+    v = ValueClass( x, y );
+  }
+
+  // alternative 2
+  ConstructorExample::ConstructorExample
+    ( ReferenceClass& ref
+    , int x
+    , int y )
+    : BaseClass( x, y )
+    , i( 0 )
+    , p( 0 )
+    , r( ref )
+    , v( x, y )
+  {}
+</pre>
+
+<p>
+  De onderstaande constructor is efficiënter omdat bijvoorbeeld de ValueClass-member 
+  niet twee keer wordt geïnitialiseerd zoals dat wel in de eerste constructor gebeurt. 
+  Bedenk wel dat de constructor ook exception-safe moet zijn. 
+  Zie ook: 'Regel: falende constructor'. Let er ook op dat de members worden geïnitialiseerd 
+  in volgorde van declaratie, niet in de volgorde waarin ze in de initialisation-list 
+  zijn geplaatst. Plaats dus ook altijd de variabelen in de initialisation-list 
+  in dezelfde volgorde als in de class-declaratie!
+  Veel programmeurs kennen trouwens niet de volgende constructor-syntaxis:
+</p>
+
+<pre>  ConstructorExample::ConstructorExample( ReferenceClass& ref, int x, int y )
+  try
+    : BaseClass( x, y )
+    , i( 0 )
+    , p( 0 )
+    , r( ref )
+    , v( x, y )
+  {
+    // bla bla
+  }
+  catch( ... )
+  {
+    // bla bla
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

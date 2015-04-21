@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>
+  Regel: canonieke member-blokkering
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?canonieke member-blokkering.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: canonieke member-blokkering 
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Blokkeer de canonieke member-functies die voor de betreffende 
+  class onzinnig zijn.
+</em>
+</blockquote>
+
+<p>
+  Wanneer een class niet is opgezet volgens de juiste canonieke vorm (zie regel:
+  <a href="canonieke%20classes.htm">canonieke classes</a>), zal de compiler 
+  defaults genereren.Het is niet altijd gewenst dat de compiler defaults genereert voor 
+  bepaalde canonieke member-functies. Voor veel classes is het 
+  niet geldig of vergezocht om deze te kunnen kopiëren of toekennen. 
+  In dat geval moeten de betreffende canonieke members worden 
+  geblokkeerd om tegen te gaan dat de compiler de functies genereert. 
+  De copy-constructor en de operator=-functie kunnen worden geblokkeerd 
+  door hun declaratie private te maken en nergens een definitie te geven:
+</p>
+<p>
+(someclass.h)
+</p>
+<pre>  #ifndef SOMECLASS_H
+  #define SOMECLASS_H
+
+  class SomeClass
+  {
+  public:
+    // bla bla
+
+  private:
+    // do not define !!!
+    SomeClass( const SomeClass& );
+    SomeClass& operator= ( const SomeClass& );
+  }
+
+  #endif
+</pre>
+
+<p>
+  De aanwezigheid van deze 'canonieke functieblokkades' is niet schadelijk 
+  voor de insulatie. Toepassing ervan in protocol- en insulator-
+  classes is dus toegestaan.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

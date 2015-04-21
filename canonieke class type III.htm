@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>
+  Regel: canonieke class type III 
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?canonieke class type III.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: canonieke class type III 
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Als er in een class (niet-statische) pointer-member-variabelen zijn 
+  opgenomen, krijgt deze in ieder geval een copy-constructor en 
+  een operator=-member.
+</em>
+</blockquote>
+
+<p>
+  Omdat ook 'Regel: canonieke class type I' en 'Regel: canonieke class 
+  type II' van toepassing zijn, ziet deze 'canonieke' class er dus 
+  als volgt uit:
+</p>
+<pre>  class CanoniekeClass
+  {
+  public:
+    CanoniekeClass();
+    CanoniekeClass( const CanoniekeClass& org );
+    CanoniekeClass& operator=( const CanoniekeClass& rhs );
+    virtual ~CanoniekeClass();
+  private:
+    // pointer-attributen
+  };
+</pre>
+<p>
+  De door de compiler gegenereerde default-constructor is fout omdat deze de 
+  member-variabelen niet initialiseert. De door de compiler gegenereerde 
+  default-destructor is fout omdat deze niet virtueel is. De door de compiler 
+  gegenereerde default copy-constructor en operator= zijn fout omdat deze 
+  niet de inhoud 'achter' de pointer kopiëren, maar slechts de pointerwaarde 
+  zelf. Hoewel dit soms de bedoeling kan zijn, is het ontbreken van expliciete 
+  afhandeling van deze situatie onduidelijk. 
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

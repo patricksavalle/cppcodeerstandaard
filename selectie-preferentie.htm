@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>
+  Regel: selectie-preferentie
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?selectie-preferentie.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_selectie-preferentie">
+<h1>
+  Regel: selectie-preferentie
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Een switch-statement geniet de voorkeur boven een if-else-ladder.
+</em>
+</blockquote>
+
+<p>
+  Een switch-statement is duidelijker dan een if-else-ladder. Gebruik 
+  daarom liever een switch dan een if-else-ladder, zeker wanneer er op 
+  enumerated-types wordt getest. Een if-statement kan echter ook 
+  vergelijken met variabelen (in plaats van compile-time-constanten) 
+  en is daarmee breder toepasbaar. 
+</p>
+
+<p>
+  Er is trouwens niets tegen een switch met slechts één case en een 
+  default! Latere uitbreidingen kunnen namelijk gemakkelijk worden aangebracht.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

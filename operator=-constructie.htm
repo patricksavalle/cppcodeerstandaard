@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>
+  Regel: operator=-constructie
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?operator=-constructie.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_operator_is_constructie">
+<h1>
+  Regel: operator=-constructie
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Ken alle member-variabelen en base-classes van een class een waarde toe in 
+  de operator=-functie.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Effective C++', Item 16
+</em>
+</p>
+
+<p>
+  De regel is eigenlijk meer een hint dat een regel. Heel vaak 
+  vergeten programmeurs dat wanneer er een eigen versie wordt 
+  geleverd van de operator=-functie voor een class die een 
+  andere class specialiseert, dan ook de operator= van de 
+  base-class moet worden aangeroepen.
+</p>
+<pre>  class SomeClass : public BaseClass
+  {
+  public:
+    // bla bla
+
+    SomeClass& operator= ( const SomeClass& rhs )
+    {
+       if (&rhs != this)
+       {
+         // call base-class operator
+         BaseClass::operator=( rhs );
+
+         // copy reference
+         mReference = rhs.mReference;
+
+         // exception-safe deep-copy of pointer
+         delete mPointer;
+         mPointer = 0;
+         mPointer = new OtherClass( *mPointer );
+
+         // copy value
+         mValue = rhs.mValue;
+       }
+       return *this;
+    }
+
+    // bla bla
+
+  private:
+    OtherClass&  mReference;
+    OtherClass*  mPointer;
+    double       mValue;
+  };
+</pre>
+<p>
+  Let op de impliciete typecast in de constructie BaseClass::operator=( rhs ). 
+  Zie ook: 'Regel: impliciete typecasts'. 
+</p>
+<p>
+  Let ook op het op '0' zetten van de 
+  pointer na deallocatie. Dit verhindert dat de destructor van de class een 
+  ongeldige deallocatie zal doen indien de new-operatie een exceptie genereert. 
+  Zie ook: 'Regel: pointer-deallocatie'.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

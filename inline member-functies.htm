@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>
+  Regel: inline member-functies
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?inline member-fucties.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_inline_member_functies">
+<h1>
+  Regel: inline member-functies
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Vermijd (default) inline member-functies en maak geen inline-destructors of constructors.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Effective C++', item 33
+</em>
+</p>
+
+<p>
+  Een (default) inline member-function is een functie waarvan de 
+  definitie in de class-declaratie staat gegeven. In principe 
+  geven dit soort functies implementatiedetails vrij en moeten 
+  ze dus worden vermeden. Er zijn slechts weinig uitzonderingen 
+  hierop te bedenken. Het onderstaande voorbeeld geeft zo'n uitzondering. 
+  De gegeven class 'Element' is voorbereid op het Visitor-pattern en 
+  heeft de voor dat pattern kenmerkende visitor-aanroep. De code 
+  hiervoor zal nooit veranderen en geeft geen 'verboden' details vrij.
+</p>
+
+<pre>  class Element;
+  class Visitor
+  {
+  public:
+    virtual ~Visitor();
+    void handleElement( Element& ) = 0;
+  };
+
+  class Element
+  {
+  public:
+    virtual ~Element();
+    virtual void SomeOperation() = 0;
+    virtual void OtherOperation() = 0;
+    virtual void callVisitor( Visitor& v )
+    {
+      v.accept( *this );
+    }
+  };
+</pre>
+
+<p>
+  De toepassing van inline-destructors en -constructors moet geheel worden vermeden, 
+  omdat de impliciete (automatische) mechanismen die de compiler gebruikt voor 
+  de generatie van destructors en constructors vaak andere resultaten levert 
+  dan zo op het eerste gezicht zou worden verwacht. Zie de boeken van Scott Meyers 
+  voor een diepgaande discussie hierover.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

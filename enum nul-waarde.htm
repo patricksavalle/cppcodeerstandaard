@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>
+  Regel: enum-NUL-waarde
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?enum nul-waarde.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_enum-NUL-waarde">
+<h1>
+  Regel: enum-NUL-waarde
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Voorzie elke enumerated altijd van een zogenaamde NUL-waarde of 'ongeldig' waarde.
+</em>
+</blockquote>
+
+<p>
+  Door een opsommingstype of enumerated altijd te voorzien van een NUL-waarde 
+  kunnen sommige constructies beter worden gemaakt. De NUL-waarde kan ook 
+  bij initialisatie aan de variabele worden toegekend. De NUL-waarde kan ook 
+  worden gebruikt als leeg-waarde, een waarde die geen actie tot gevolg heeft! 
+</p>
+
+<p>	
+  Een enumerated declaratie ziet er dus ongeveer als volgt uit (zie eerste element):
+</p>
+
+<pre>  enum t_week_dag
+  { ALG_NULL_DAG
+  , ALG_ZONDAG
+  , ALG_MAANDAG
+  , ALG_DINSDAG
+  , ALG_WOENSDAG
+  , ALG_DONDERDAG
+  , ALG_VRIJDAG
+  , ALG_ZATERDAG 
+  };
+</pre>
+
+<p>
+  Deze constructie kan dan worden gebruikt voor extra veiligheid, zoals in de 
+  default-case van het onderstaande voorbeeld:
+</p>
+
+<pre>  {
+    // gebruik NUL-waarde voor initialisatie 
+    t_week_dag week_dag = ALG_NULL_DAG;
+
+    // bla bla 
+
+    switch(dag)
+    {
+      case ALG_ZONDAG:
+      case ALG_ZATERDAG:
+        // bla bla 
+        break;
+
+      case ALG_MAANDAG:
+      case ALG_DINSDAG:
+      case ALG_WOENSDAG:
+      case ALG_DONDERDAG:
+      case ALG_VRIJDAG:
+        // bla bla 
+        break;
+
+      case ALG_NULL_DAG:
+      default:
+        // foutmelding 
+        break;       
+    }
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

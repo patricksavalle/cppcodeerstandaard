@@ -1,0 +1,191 @@
+<html>
+<head>
+<title>
+  Regel: expliciete typecasts
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?expliciete typecasts.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_expliciete_typecasts">
+<h1>
+  Regel: expliciete typecasts
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Gebruik expliciete typecasts met beleid, bijvoorbeeld om (fysieke) const-correctheid 
+  te manipuleren.
+</em>
+</blockquote>
+
+<p>
+  Een typecast is gevaarlijk, zeker wanneer een type wordt gedemoveerd naar een type 
+  met een minder bereik (type-demotie). Typecasts moeten met beleid worden gebruikt. 
+  Goede alternatieven voor typecasts zijn conversiefuncties en -operators of 
+  cast-constructors. Wanneer er gebruik gemaakt wordt van conversiefuncties/operators 
+  in plaats van hard-coded typecasts, kunnen er validaties worden ingebouwd die 
+  controleren of er geen informatie verloren gaat bij de conversie. 
+</p>
+
+<p>
+  In grote projecten die draaien op meerdere platforms en worden gebouwd met 
+  verschillende compilers, zal ook blijken dat niet elke compiler hetzelfde 
+  doet met typecasts. Ook het mengen van verschillende types in een expressie 
+  zal niet altijd op dezelfde manier worden behandeld door verschillende compilers. 
+  Er kunnen verschillen zijn tussen de compilers en de RTL's en die verschillen 
+  zullen zich uiten in verschillende uitkomsten per platform. Wanneer er 
+  een conversiefunctie wordt gebruikt, kan de functie daar rekening mee houden 
+  en hoeft de andere code niet worden veranderd. Wanneer er van typecasts gebruik 
+  wordt gemaakt, dan zullen alle typecasts moeten worden veranderd en dat kost 
+  meer tijd en brengt meer risico met zich mee dan het veranderen van 
+  een enkele functie!
+</p>
+
+<p>
+  Een geldige toepassing van de explicite typecast is het zorgvuldig manipuleren 
+  van de fysieke const-correctheid van een object zonder dat de logische 
+  const-correctheid wordt geschaad, meestal ter optimalisatie van de implementatie. 
+  De onderstaande code toont het voorbeeld uit het hoofdstuk 'Const-correctheid', 
+  maar dan herschreven met een typecast. Hoewel de Save-operatie van de class 
+  een const-member is, zal de fysieke toestand van het object toch veranderen 
+  (mogelijk gemaakt door de typecast). Deze optimalisatie is toegestaan omdat 
+  de client logisch niets aan het object kan merken. 
+</p>
+
+<pre>  class ImageProxy
+  {
+  public:
+    void Rotate()
+    {
+      changed = true;
+
+      // bla bla
+    }
+
+    void Resample( int new_width, int new_height )
+    {
+      changed = true;
+
+      // bla bla
+    }
+
+    void Load( const char* filename )
+    {
+      changed = false;
+
+      // bla bla
+    }
+
+    void Save() const
+    {
+      if (changed)
+      {
+        // cast constness away
+        const_cast<ImageProxy*>(this)->changed = false;
+
+        // bla bla
+      }
+    }
+
+  private:
+    bool changed;
+  };
+</pre>
+
+<p>
+  Dit soort constructie kunnen trouwens beter worden gecodeerd met 
+  het mutable-keyword, dat ziet er als volgt uit:
+</p>
+
+<pre>  class ImageProxy
+  {
+  public:
+
+    // bla bla (see above)
+
+    void Save() const
+    {
+      if (changed)
+      {
+        changed = false;
+
+        // bla bla
+      }
+    }
+
+  private:
+    <b>mutable</b> bool changed;
+  };
+</pre>
+
+<p>
+  Zie ook regel: <a href="mutable class-toestand.htm">Mutable class-toestand</a>.
+</p>
+
+<p>
+  Een andere geldige toepassing van de expliciete typecast is in combinatie met 
+  een RTTI-constructie. RTTI staat voor 'Run-time Typing Information' en is 
+  de mogelijkheid om het type van een object in run-time te kunnen opvragen. 
+  Zorgvuldige toepassing van RTTI-technieken kan zeer effectief zijn wanneer 
+  insulatie en vermindering van afhankelijkheid belangrijk is. De alternatieven 
+  geven vrijwel altijd meer afhankelijkheid tussen de betrokken classes. 
+  Zie ook: pattern 'Morph', in het hoofdstuk 'C++-Patterns' voor een effectieve 
+  toepassing van RTTI. Het onderstaande voorbeeld toont een RTTI-constructie 
+  met de dynamic_cast-operator.
+</p>
+
+<pre>  #include &lt;typeinfo.h&gt;
+
+  class Base {};
+  class DerivedA : public Base {};
+  class DerivedB : public Base {};
+
+  void ReconstructDerivedTypeFromBaseClass( Base& base )
+  {
+    try
+    {
+      if ( typeid( base ) == typeid( DerivedA ) )
+      {
+        DerivedA& deriveda = dynamic_cast<DerivedA&>( base );
+      }
+      else if ( typeid( base ) == typeid( DerivedB ) )
+      {
+        DerivedB& derivedb = dynamic_cast<DerivedB&>( base );
+      }
+      else
+      {
+        // error
+      }
+     }
+    catch( bad_cast& )
+    {
+      // bla bla
+    }
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

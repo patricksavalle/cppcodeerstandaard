@@ -1,0 +1,133 @@
+<html>
+<head>
+<title>
+  Regel: compound-statement na herhaling of selectie 
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?compound-statemnent na herhaling of selectie.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_compound-statement na herhaling of selectie">
+<h1>
+  Regel: compound-statement na herhaling of selectie 
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elk herhalings- of selectie-statement wordt gevolgd door een (eventueel leeg) compound-statement.
+</em>
+</blockquote>
+
+<p>
+  Een compound-statement is een blok met statements:
+</p>
+
+<pre>  // compound-statement
+  {
+    // bla bla
+  }
+</pre>
+
+<p>
+Deze regel geldt voor de if, else, while, do, en de for. 
+</p>
+
+<pre>  // niet zo
+  {
+    if ( expressie ) statement;
+
+    if ( expressie )
+      statement;
+    else
+      statement;
+
+    while( expressie ) statement;
+
+    do statement; while( expressie );
+
+    for( int i=0; i<10; i++) statement
+  }
+
+  // maar zo
+  {
+    if ( expressie ) 
+    {
+      statement; 
+    }
+
+    if ( expressie )
+    {
+      statement; 
+    }
+    else
+    {
+      statement;
+    }
+
+    while( expressie ) 
+    {
+      statement;
+    }
+
+    do
+    { 
+      statement; 
+    }
+    while( expressie );
+
+    for( int i=0; i<10; i++) 
+    {
+      statement;
+    }
+  }
+</pre>
+
+<p>
+  Voorzie ook een leeg herhalingsstatement voor de duidelijkheid van een leeg compound-statement. Soms komt het voor dat een programmeur ervoor kiest om een 'lege' lus te programmeren. Bijvoorbeeld:
+</p>
+
+<pre>  {
+    const int WACHT_TIJD=10;    
+    time_t time_mark = time();
+    while (time() < (time_mark + WACHT_TIJD));
+  }
+</pre>
+
+<p>
+Duidelijker is echter om deze constructie als volgt te coderen:
+</p>
+
+<pre>  {
+    const int WACHT_TIJD=10;
+    time_t time_mark = time();
+    while (time() < time_mark+WACHT_TIJD) 
+    {
+      // niets
+    }
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

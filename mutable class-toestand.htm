@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>
+  Regel: mutable class-toestand 
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?mutable class-toestand.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_mutable_class_toestand ">
+<h1>
+  Regel: mutable class-toestand 
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  De waarde van mutable gedeclareerde class-variabelen mag in principe 
+  niet via de publieke interface opvraagbaar zijn. 
+</em>
+</blockquote>
+
+<p>
+  Het onderstaande fragment toon een 'mutable' gedeclareerde variabele:
+</p>
+
+<pre>  class ExampleClass
+  {
+    // bla bla
+
+  private:
+    mutable bool mChanged;
+  };
+</pre>
+
+<p>
+  Het keyword mutable kan worden gebruikt om logische const-correctheid 
+  op de fysieke const-correctheid af te stemmen. Dit soort afstemmingen 
+  zijn altijd optimalisaties van een bepaalde implementatie, die voor 
+  de buitenwereld onzichtbaar moeten blijven. Het is uitgesloten dat 
+  mutable-variabelen tot de logische toestand van een class kunnen behoren. 
+  Een mutable-variabele zal per definitie veranderen tijdens constante-operaties, 
+  dus als het mogelijk is voor de buitenwereld om de toestand van dergelijke 
+  variabelen te kunnen opvragen, dan is automatisch de logische 
+  const-correctheid van de class verbroken. Dit heeft op zich geen 
+  destructieve gevolgen, maar het is wel mogelijk (bewust of onbewust) 
+  voor de omgeving van de betreffende class om afhankelijk te worden 
+  van implementatiekeuzen. En als dat eenmaal is gebeurd, is het vrijwel 
+  onmogelijk om later nog te kiezen voor een andere implementatieoplossing. 
+  Categorie oerdom.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

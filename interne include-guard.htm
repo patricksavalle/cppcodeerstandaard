@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>
+  Regel: interne include-guard
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?interne include-guard.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: interne include-guard
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elk declaratiebestand beschermt zichzelf tegen meervoudige compilatie 
+  met een interne includebescherming.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Large Scale C++ Software Design', par. 2.4
+</p>
+</em>
+
+<p>
+Include-files kunnen zelf ook weer include-files includen en dit kan leiden tot 
+meervoudige (redundantie) including van h-files.
+Redundante includes kunnen leiden tot dubbele declaraties. Om hiertegen te beschermen worden declaratiebestanden voorzien van include-guards. Deze include-guard ziet er als volg uit:
+</p>
+<p>
+(testclass.h)
+</p>
+<pre>  #ifndef TESTCLASS_H
+  #define TESTCLASS_H
+
+  // declaraties
+
+  #endif // TESTCLASS_H
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

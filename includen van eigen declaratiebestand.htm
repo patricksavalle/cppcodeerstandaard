@@ -1,0 +1,141 @@
+<html>
+<head>
+<title>
+  Regel: includen van eigen declaratiebestand
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?includen van eigen declaratiebestand.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_includen_van_eigen_declaratiebestand">
+<h1>
+  Regel: includen van eigen declaratiebestand
+</h1>
+</a>
+    
+<blockquote>
+<em>
+Elke definitiebestand heeft als eerste regel echte code het include-statement 
+van z'n eigen declaratiebestand.
+</em>
+</blockquote>
+
+<p>
+<em>
+Zie ook: 'Large Scale C++ Software Design', par. 3.2
+</em>
+</p>
+
+<p>
+  Om te kunnen controleren dat er geen belangrijke declaraties ontbreken 
+  in een declaratiebestand, moet een definitiebestand als eerste statement 
+  het include-statement van z'n eigen declaratiebestand opnemen, vóór 
+  ieder ander statement of andere includeregel. Hierdoor zal de compiler 
+  ontbrekende declaraties in het declaratiebestand kunnen detecteren. 
+  Het declaratiebestand moet dus op zichzelf foutloos kunnen compileren 
+  om er zeker van te zijn dat de interface compleet is en niet afhankelijk 
+  van de declaraties in eerder geïnclude declaratiebestanden. Het onderstaande 
+  fragment toont een declaratiebestand (class2.h) met een ontbrekend 
+  declaratie/include-statement:
+</p>
+
+<p>
+(class1.h)
+</p>
+<pre>  #ifndef CLASS1_H
+  #define CLASS1_H
+
+  class Class1 {};
+
+  #endif
+</pre>
+<p>
+(class2.h)
+</p>
+<pre>  #ifndef CLASS2_H
+  #define CLASS2_H
+
+  class Class2 : public Class1 {};
+
+  #endif
+</pre>
+<p>
+(class2.cpp)
+</p>
+<pre>  #ifndef   CLASS1_H
+  #include "class1.h"
+  #define   CLASS1_H
+  #endif
+
+  #ifndef   CLASS2_H
+  #include "class2.h"
+  #define   CLASS2_H
+  #endif
+
+  // bla bla
+</pre>
+
+<p>
+  Declaratiebestand class2.h is vergeten om class1.h te includen. 
+  Dat is nodig omdat Class2 gebruik maakt van Class1. 
+  De code zal foutloos compileren omdat de declaraties die Class2 nodig 
+  heeft toevallig net daarvoor werden geïnclude in het definitiebestand. 
+  De correcte interface van Class2 is:
+</p>
+<p>
+(class2.h)
+</p>
+<pre>  #ifndef CLASS2_H
+  #define CLASS2_H
+
+  #ifndef   CLASS1_H
+  #include "class1.h"
+  #define   CLASS1_H
+  #endif
+
+  class Class2 : public Class1 {};
+
+  #endif
+</pre>
+<p>
+De compiler had de fout gevonden als het eigen declaratiebestand als eerste was geïnclude. Dus als volgt:
+</p>
+<p>
+(class2.cpp)
+</p>
+<pre>  #ifndef   CLASS2_H
+  #include "class2.h"
+  #define   CLASS2_H
+  #endif
+
+  #ifndef   CLASS1_H
+  #include "class1.h"
+  #define   CLASS1_H
+  #endif
+
+  // bla bla
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

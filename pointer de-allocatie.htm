@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>
+  Regel: pointer-deallocatie
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?pointer de-allocatie.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_pointer_deallocatie">
+<h1>
+  Regel: pointer-deallocatie
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Zet elke pointer direct na deallocatie (delete, free) op 0.
+</em>
+</blockquote>
+
+<p>
+  Om te voorkomen dat pointers nog ongemerkt worden gebruikt nadat 
+  het geheugen waarnaar ze wezen was gedealloceerd, moet elke pointer 
+  direct na deallocatie op 0 worden gezet. Een pointer is dus altijd 
+  óf geldig, óf 0.
+</p>
+<p>
+  Héél belangrijk is dat deze regel ook wordt toegepast wanneer een 
+  pointer direct na deallocatie weer wordt gealloceerd, zoals in 
+  het volgende voorbeeld:
+</p>
+
+
+<pre>  X& X::operator=( const X& rhs ) 
+  {
+    if (this!=&rhs)
+    {
+      delete y;
+      y = 0;                 // very important!!!
+      y = new Y( *rhs.y );
+    }
+    return *this;
+  }
+</pre>
+
+<p>
+  De reden hiervoor is dat de new-operator een exceptie kan genereren en zo 
+  uiteindelijk een destructor of een andere functie kan activeren die de 
+  pointer gaat proberen te dealloceren met de delete-operator. Als 
+  de pointer netjes op 0 is gezet zal de delete-operator niets doen, 
+  omdat de delete-operator is beschermd tegen 0-pointers. Staat de 
+  pointer echter niet op 0, en dus op een ongeldige waarde, dan 
+  zal er een ongeldige deallocatie plaatsvinden die het systeem in 
+  een instabiele toestand zal brengen. 
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

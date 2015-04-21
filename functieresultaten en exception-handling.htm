@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>
+  Regel: functieresultaten en exception-handling
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?functie-resultaten en exception-handling.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_functieresultaten_en_exception-handling">
+<h1>
+  Regel: functieresultaten en exception-handling
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Indien er gebruik wordt gemaakt van exception-handling, is de uitkomst van een 
+  functie altijd geldig!
+</em>
+</blockquote>
+
+<p>
+  Omdat er exception-handling wordt gebruikt kunnen ongeldige uitkomsten niet meer 
+  voorkomen. Clients hoeven de uitkomende variabelen of het functieresultaat niet 
+  te controleren op geldigheid. In het geval dat de serverfunctie niet kon voldoen 
+  aan zijn contract (en dus geen geldige uitkomst kon geven), genereert hij een 
+  exceptie en moet de client deze afhandelen buiten de 'normale' functionaliteit. 
+  De volgende constructie komt dus aan de client-kant niet meer voor:
+</p>
+
+<pre>  void Client::eenFunctie()
+  {
+  	Container*	c = Server.geefEersteContainer()
+  	if (c != 0)
+  	{
+  		// bla bla
+  	}
+  	c->doeIets();
+  	// bla bla
+  }
+</pre>
+
+<p>
+  In plaats daarvan kan de client als volgt worden gecodeerd:
+</p>
+
+<pre>  void Client::eenFunctie()
+  {
+  	Container& c = Server.geefEersteContainer();
+  	c.doeIets();
+  	// bla bla
+  }
+</pre>
+
+<p>
+  Of zelfs (lastiger debuggen):
+</p>
+
+<pre>  void Client::eenFunctie()
+  {
+  	Server.geefEersteContainer().doeIets();
+  	// bla bla
+  }
+</pre>
+
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>
+  Regel: preprocessor-macro's
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?preprocessor-macros.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_preprocessor-macro's">
+<h1>
+  Regel: preprocessor-macro's
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Gebruik geen preprocessor-macro's als alternatief voor inline-functies!
+</em>
+</blockquote>
+
+<p>
+<em>
+Zie ook: 'Large Scale C++ Software Design', par. 2.3.4
+</em>
+</p>
+
+<p>
+<em>
+Zie ook: 'Effective C++', item 1
+</em>
+</p>
+
+<p>
+  Het gebruik van macrofuncties valt meestal in de categorie 
+  snelheidsoptimalisatie. Een macrofunctie wordt namelijk altijd 
+  inline geplaatst en sommige programmeurs zien daar een voordeel in. 
+  Een macrofunctie heeft echter ook ALTIJD bijwerkingen en is 
+  daarom ALTIJD minder veilig dan een echte functie. Het onderstaande 
+  voorbeeld spreekt voor zich:
+</p>
+
+<p>
+  Wat is de output van het volgende programma? 
+</p>
+
+
+<pre>  #include &lt;iostream&gt;
+
+  #define CUBE(x) ((x)*(x)*(x))
+
+  int main
+  {
+    int a = 3;
+    int b = 0;
+ 
+    b = CUBE(a++);
+
+    cout &lt;&lt; a &lt;&lt; endl;
+    cout &lt;&lt; b &lt;&lt; endl;
+  }
+</pre>
+
+<p>
+  Zie 'B.5	Macro-effect' voor de oplossing.
+</p>
+
+<p>
+  Het 'inlinen' van functies wordt door veel compilers automatisch gedaan zodat veel kleine functies net zo snel zullen lopen als een macro, maar de bijwerkingen ervan vermijden. Ook speciale aanroepconventies, zoals de fastcall-conventie (MSVC), of de registercall-conventie (BCC) maken een functieaanroep minder kostbaar zonder de veiligheid van de constructie te compromitteren. De aanroepconventie kan meestal met een compilerinstelling worden geregeld.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

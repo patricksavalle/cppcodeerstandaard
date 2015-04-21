@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>
+  Regel: forward-declaration
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?forward-declaration.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_forward_declaration">
+<h1>
+  Regel: forward-declaration
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elk bronbestand include slechts de declaratiebestanden met declaraties 
+  van types die in het bronbestand zelf als value-variabele worden gebruikt. Andere
+  types worden door middel van forward-declaration gedeclareerd.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Effective C++', item 34.
+</em>
+</p>
+
+<p>
+  Een declaratiebestand of definitiebestand include dus geen 
+  declaratiebestanden voor symbolen die slechts by-reference of 
+  als functieargument of -resultaat worden gebruikt. Daarvoor moet 
+  een forward-declaratie worden gebruikt. Een declaratiebestand neemt 
+  dus ook niet de includes op die alleen in zijn definitiebestand 
+  daadwerkelijk nodig zijn, het definitiebestand heeft daarvoor zijn 
+  eigen includes! 
+</p>
+
+<p>
+  De onderstaande code toont alle mogelijke member-declaraties die geen 
+  include-statement nodig hebben:
+</p>
+
+<pre>  // forward declaration
+  class ClassB;
+
+  class ClassA
+  {
+  public:
+    void Operation1( ClassB );
+    void Operation2( ClassB* );
+    void Operation3( ClassB& );
+    ClassB  Operation4();
+    ClassB* Operation5();
+    ClassB& Operation6();
+  private:
+    ClassB* b1;
+    ClassB& b2;
+  };
+</pre>
+
+<p>
+  Deze regel is syntactisch lastig als de forward-declaraties 
+  template-classes betreffen. Het onderstaande voorbeeld toont 
+  de syntaxis van een forward-declaratie van een template-class:
+</p>
+
+<pre>  // forward template-class declaration
+  template &lt;class T&gt; class Point;
+
+  class PointClass
+  {
+  public:
+    PointClass();
+    PointClass( const PointClass& org );
+    ~PointClass();
+    PointClass& operator= ( const PointClass& rhs );
+  private:
+    Point&lt;int&gt;*	point;
+  };
+</pre>
+
+<p>
+  Het forward-declareren van een typedef die een template-declaratie 
+  gebruikt (denk aan het STL-stringtype!) is praktisch gesproken 
+  niet mogelijk. Scott Meyers doet in 'Effective C++, item 49' voor 
+  hoe het wel kan.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+body { 
+	background-color	: white; 
+	margin-left			: 10%; 
+	margin-right		: 10%; 
+	link				: blue; 
+	vlink				: blue; 
+	alink				: blue; 
+	font-size			: x-small; 
+	font-family			: verdana; 
+	color				: black; 
+	text-align			: justify;
+}
+
+p {
+	font-size			: x-small; 
+	font-family			: verdana; 
+	color				: black; 
+	text-align			: justify;
+}
+
+pre {
+	font-size			: x-small; 
+	font-family			: courier; 
+	color				: black; 
+	text-align			: left; 
+	background-color	: #E0E0E0;
+}
+
+blockquote { 
+	font-size			: x-small; 
+	font-family			: verdana; 
+	color				: black; 
+	text-align			: left; 
+	font-style			: italic; 
+}
+
+h1 {
+	font-size			: large; 
+	font-family			: verdana; 
+	color				: black; 
+	text-align			: center; 
+}
+
+h2 {
+	font-size			: normal; 
+	font-family			: verdana; 
+	color				: black; 
+	background-color	: #F4EA91;
+	font-style			: bold; 
+}
+
+Hh {
+	font-size			: x-small; 
+	font-family			: verdana; 
+	color				: white; 
+	background-color	: #336699;
+}
+
+li {
+	font-size			: x-small; 
+	font-family			: verdana; 
+	color				: black; 
+	list-style-type		: square; 
+	text-align			: left;
+}
+
+ul {
+	font-size			: x-small; 
+	font-family			: verdana; 
+	color				: black 
+}
+
+td {
+	font-size			: x-small; 
+	font-family			: verdana; 
+	color				: black 
+}
+
+hr {
+	color				: #F4EA91;
+}
+
+a:link { 
+	color				: blue; 
+	text-decoration		: none;
+} 
+
+a:active { 
+	color				: blue; 
+	text-decoration		: none;
+} 
+
+a:visited { 
+	color				: blue; 
+	text-decoration		: none;
+}
+ 
+a:hover { 
+	color				: red; 
+	text-decoration		: underline;
+}
+
+tr {
+	font-size			: x-small; 
+	font-family			: verdana; 
+	color				: black;
+}
+
+td {
+	font-size			: x-small; 
+	font-family			: verdana; 
+	color				: black;
+}
+
+td#menuheader {
+	background			: #336699; 
+	color				: white; 
+	font-style			: bold; 
+}

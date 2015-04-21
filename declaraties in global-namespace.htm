@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>
+  Regel: declaraties in global-namespace
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?declaraties in global-namespace.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_declaraties_in_global-namespace">
+<h1>
+  Regel: declaraties in global-namespace
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Indien er niet van namespaces gebruik wordt gemaakt, zijn de enige symbolen die 
+  in global-namespace worden gedeclareerd de 'main', classes en operator-functies.
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'Large Scale C++ Software Design', par. 2.3.5
+</em>
+</p>
+
+<p>
+  Andere symbolen zoals typedefs, constants en enumerates zijn altijd onder 
+  te brengen in een class. Voorbeeld:
+</p>
+
+<pre>  #ifndef XPRPARSER_H
+  #define XPRPARSER_H
+
+  #ifndef   STRING
+  #include &lt;string&gt;
+  #define   STRING
+  #endif
+
+  class xprParserImplementor;   
+
+  class xprParser
+  {
+  public:
+    enum TokenType
+    { TOK_NULL = 0
+    , TOK_ADD        // add operator
+    , TOK_SUB        // subtract operator
+    , TOK_MUL        // multiply operator
+    , TOK_DIV        // divide operator
+    , TOK_MOD        // modulo-divide operator
+    , TOK_POW        // raise-to-a-power operator
+    , TOK_ABS        // absolute-value bracket
+    , TOK_LPAR       // left-parenthesis
+    , TOK_RPAR       // right-parenthesis
+    , TOK_LBRAC      // left-bracket
+    , TOK_RBRAC      // righ-bracket
+    , TOK_NUM        // numerical constant
+    , TOK_VAR        // symbolic-variable
+    , TOK_EOLN       // end-of-line symbol ("stopper")
+    };
+
+    xprParser();
+    xprParser( const xprParser& copy );
+    xprParser& operator=( const xprParser& copy );
+    virtual ~xprParser();
+
+    virtual double evaluateExpression ( const string& expression );
+
+  private:
+    xprParserImplementor& Implementor;
+  };
+
+  #endif
+</pre>
+
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

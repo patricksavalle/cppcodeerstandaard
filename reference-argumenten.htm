@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>
+  Regel: reference-argumenten
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?reference-argumenten.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_reference-argumenten">
+<h1>
+  Regel: reference-argumenten
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Maak van een functieargument een reference-variabele als het 
+  argument een geldig object moet zijn.
+</em>
+</blockquote>
+
+<p>
+  Een reference-argument wijst namelijk altijd naar een geldig object 
+  (fysiek, niet per se logisch) en dat scheelt de aangeroepen functie 
+  een controle op de geldigheid van het argument. De functie in het 
+  onderstaande fragment moet eerst zijn argument valideren.
+</p>
+
+<pre>  void Function( const SomeClass* a )
+  {
+    assert( a!=0 );
+
+    // bla bla
+
+    a-&gt;SomeOperation();
+
+    // bla bla
+  }
+</pre>
+
+<p>
+  Terwijl een eenvoudige aanpassing dit onnodig maakt:
+</p>
+
+
+<pre>  void Function( const SomeClass& a )
+  {
+    // bla bla
+
+    a.SomeOperation();
+
+    // bla bla
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

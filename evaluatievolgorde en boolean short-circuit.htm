@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>
+  Regel: evaluatievolgorde en boolean short-circuit
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?evaluatievolgorde en boolean short-circuit.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_evaluatievolgorde_en_boolean_short-circuit">
+<h1>
+  Regel: evaluatievolgorde en boolean short-circuit
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Vertrouw nooit op short-circuit-evaluatie voor Booleaanse expressies. 
+</em>
+</blockquote>
+
+<p>
+<em>
+  Zie ook: 'More effective C++', item 7.
+</em>
+</p>
+
+<p>
+<em>
+  Ga er altijd van uit dat de gehele expressie zal worden geëvalueerd!
+</em>
+</p>
+
+
+<p>	
+  Net als C, evalueert C++ Booleaanse expressie volgens een methode die 'boolean 
+  short-circuit-evaluation' wordt genoemd. Zodra de uitkomst van een expressie 
+  vaststaat, wordt de rest van de expressie niet meer geëvalueerd. 
+  Veel programmeurs gebruiken die eigenschappen voor constructies zoals:
+</p>
+
+<pre>  void function( const char* txt )
+  {
+    if( (txt && (strlen( txt ) > 0) )
+    {
+      // bla bla
+    }
+  }
+</pre>
+
+<p>
+  Deze constructie zorgt ervoor dat de strlen-functie nooit wordt aangeroepen 
+  als de txt-variabele een 0-pointer is. In een C-omgeving is deze constructie 
+  veilig, maar in een C++-omgeving, waar operators mogen worden gedefinieerd 
+  (operator-overloading), is deze constructie ineens potentieel gevaarlijk. 
+  Zodra er namelijk een overload voor één van de operators in een 
+  Booleaanse expressie bestaat, gebruikt de compiler geen short-circuit-evaluation 
+  meer, maar 'gewone' functieaanroepevaluatie, en die werkt anders. Daarbij 
+  worden wel alle argumenten geëvalueerd, en dus ook een eventuele 0-pointer. 
+</p>
+
+<p>
+  Het onderstaande pseudocode voorbeeld toont de gevaren:
+</p>
+
+<pre>  // gegeven is de volgende overload
+  bool operator&&( expressie1, expressie2 );
+
+  // dan wordt de volgende expressie niet meer volgens short-circuit geëvalueerd
+  if (expressie1 && expressie2)
+  {
+    // bla bla
+  }
+</pre>
+
+<p>
+  De in dit opzicht gevaarlijke operators zijn de logisch 'en' ( && ), de 
+  logische 'of' ( || ) en de comma-operator ( , ). De veilige manier van 
+  programmeren van de gegeven constructie is de volgende:
+</p>
+
+<pre>  void function( const char* txt )
+  {
+    if (0 != txt)
+    {
+      if (strlen( txt ) > 0)
+      {
+        // bla bla
+      }
+    }
+  }
+</pre>
+
+<p>
+  Een leuk raadseltje van Dan's Riddle Page  toon de eigenaardigheden van 
+  operator-evaluatie en Booleaanse short-circuit. Probeer maar eens te 
+  voorspellen wat de uitkomst van het volgende stuk code is:
+</p>
+
+<pre>  #include <iostream>
+
+  enum ENUM { ZERO=0, ONE=1 };
+
+  int operator||(const ENUM a, const ENUM b) 
+  { 
+    return static_cast<int>(a) || static_cast<int>(b); 
+  }
+
+  int foo(const int num)  
+  { 	
+    cout << num << endl;
+    return num;
+  }
+
+  ENUM bar(const int num) 
+  { 
+    cout << num << endl;
+    return static_cast<ENUM>(num); 
+  }
+
+  int main()
+  {
+    foo(0) || foo(1);
+    bar(0) || bar(1);
+  }
+</pre>
+
+<p>
+  De oplossing staat achterin, paragraaf 'B.3	Operatief'.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

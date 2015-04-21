@@ -1,0 +1,149 @@
+<html>
+<head>
+<title>
+  Regel: operator=-zelfbescherming
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?operator=-zelfbescherming.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_operator_is_zelfbescherming">
+<h1>
+  Regel: operator=-zelfbescherming
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Voorzie een operator=-functie altijd van de 'zelfbescherming'.
+</em>
+</blockquote>
+
+<p>
+<em>
+Zie ook: 'Effective C++', Item 17
+</em>
+<p>
+<p>
+  De operator=-functie is een van de canonieke members van een class 
+  en zal dus voor bijna elke class moeten worden geïmplementeerd. 
+  Elke full-proof operator=-functie zal zichzelf moeten beschermen 
+  tegen het toekennen aan zichzelf, zoals gebeurt in onderstaande constructie:
+</p>
+<pre>  {
+    SomeClass a;
+    SomeClass& b = a;
+    // bla bla
+    a = b;
+  }
+</pre>
+<p>
+  Nu is het in de bovenstaande constructie natuurlijk meteen duidelijk, 
+  maar bij intensief gebruik van references en pointers kan een 
+  dergelijke situatie wel eens ongemerkt ontstaan. De belangrijkste 
+  reden voor de zelfbescherming van de operator= is niet efficiëntie 
+  maar robuustheid. Bekijk zorgvuldig de operator=-functie uit het 
+  onderstaande voorbeeld. Het is de operator= van een class die een 
+  array van int's representeert. Indien rhs hetzelfde object is als 
+  "this", dan zal de memcpy de verkeerde data kopiëren omdat de echte 
+  data al twee regels eerder werd weggegooid.
+</p>
+<pre>  IntArray& IntArray::operator= ( const IntArray& rhs )
+  {
+    delete [] data;
+    data = new int [rhs.length];
+    memcpy( data, rhs.data, data.length );
+    return *this;
+  }
+</pre>
+<p>
+De onderstaande functie toont de techniek die nodig is om hiertegen te beschermen:
+</p>
+<pre>  IntArray& IntArray::operator= ( const IntArray& rhs )
+  {
+    if( &rhs!=this )				// compare addresses
+    {
+      delete [] data;
+      data = new int [rhs.length];
+      memcpy( data, rhs.data, data.length );
+    }
+    return *this;
+  }
+</pre>
+<p>
+De zelfbescherming controleert of het adres van het rhs-object niet hetzelfde is als dat van het this-object. Deze constructie werkt niet altijd goed wanneer er gebruik wordt gemaakt van multiple-inheritance. In dat geval kan beter de inhoud van de twee objecten worden vergeleken omdat een enkel object meerdere adressen kan hebben, afhankelijk van welke base-class als uitgangspunt wordt genomen:
+</p>
+<pre>  // same as above, but safer in presence of multiple inheritance
+  // could be very much slower though!
+  IntArray& IntArray::operator= ( const IntArray& rhs )
+  {
+    if( rhs!=*this )				// compare values
+    {
+      delete [] data;
+      data = new int [rhs.length];
+      memcpy( data, rhs.data, data.length );
+    }
+    return *this;
+  }
+</pre>
+<p>
+  Naast de operator=-functie hebben ook andere non-const member-functies 
+  met als input-argument hun eigen type dit probleem. Voorzie ook dat 
+  soort functies van een zelfbescherming, echter in plaats van het 
+  toestaan van de operatie (zoals in het bovenstaande voorbeeld gebeurt, 
+  omdat de normale semantiek van de =-operator dat nu eenmaal zo gebiedt) 
+  kan in de meeste gevallen beter gebruik gemaakt worden van een exceptie, 
+  assert() of abort(). Meestal is het namelijk een programmeerfout. Het 
+  onderstaande voorbeeld toont dit:
+</p>
+<pre>  void Collection::Add( const Collection& c )
+  {
+    assert( &a!=this );
+
+    // bla bla
+  }
+
+  void Collection::Add( const Collection& c )
+  {
+    if( &a==this )
+    {
+      throw XProgrammingError( "cannot use self as argument" );
+    }
+
+    // bla bla
+  }
+
+  void Collection::Add( const Collection& c )
+  {
+    if( &a==this )
+    {
+      abort();
+    }
+
+    // bla bla
+  }
+</pre>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

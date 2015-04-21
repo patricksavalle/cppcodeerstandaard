@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>
+  Regel: aannames en defaults
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?aannames en defaults.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<h1>
+  Regel: aannames en defaults
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Vermijd aannames of defaults.
+</em>
+</blockquote>
+
+<br>
+
+<p>
+  Schrijf altijd alle aannames of defaults volledig uit om te voorkomen dat iemand anders later een andere aanname doet. 
+  De C++-standaard stelt bijvoorbeeld dat het default-functieresultaat een int is. De volgende functie heeft dus automatisch een functiewaarde van het type int:
+</p>
+<pre>
+  function();
+</pre>
+</p>
+<p>
+  Het is duidelijker om dit uit te schrijven en zo onnodige vergissingen te vermijden:
+</p>
+<pre>
+  int function();
+</pre>
+<p>
+  Ook een aanname is het impliciet 'virtual' zijn van 'overriding' functies in afgeleide classes.
+</p>
+<pre>
+  class Base
+  {
+  public:
+    virtual int Operation();
+  };
+
+  class Derived : public Base
+  {
+  public:
+    int Operation();		// eigenlijk ook 'virtual'
+  };
+</pre>
+<p>
+  Duidelijker (voor gebruikers van de afgeleide class) is om dit als volgt te coderen:
+</p>
+<pre>
+  class Base
+  {
+  public:
+    virtual int Operation();
+  };
+
+  class Derived : public Base
+  {
+  public:
+    virtual int Operation();
+  };
+</pre>
+<p>
+  De gebruikers van de class hoeven dan niet helemaal in de top van de hiërarchie te kijken of een bepaalde functie virtueel is of niet. 
+  Andere voorbeelden van aannames en defaults zijn:
+  <ul>
+  <li>De canonieke, automatisch gegenereerde members van een class</li>
+  <p><em>Zie ook: <a href="canonieke class type I.htm">'Regel: canonieke class type I'</a>, <a href="canonieke class type I.htm">'Regel: canonieke class type II'</a> en <a href="canonieke class type I.htm">'Regel: canonieke class type III'</a> </em></p>
+  <li>Impliciete typecasts</li><br>
+  <p><em>Zie ook: <a href="impliciete typecasts.htm">'Regel: impliciete typecasts'.</a></em></p>
+  <li>Operator prioriteit / expressie evaluatievolgorde</li><br>
+  <p><em>Zie ook: <a href="evaluatievolgorde en boolean short-circuit.htm">'Regel: evaluatievolgorde en boolean short-circuit'.</a></em></p>
+  </ul>
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

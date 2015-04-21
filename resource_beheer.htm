@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>
+  Regel: resource-beheer (allocatie/de-allocatie)
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?resource_beheer.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="regel_regelnaam">
+<h1>
+  Regel: resource-beheer (allocatie/de-allocatie)
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Elke bron of voorraad die het programma nodig heeft wordt gealloceerd vanuit een constructor. 
+  Elke bron of voorraad die het programma nodig heeft wordt ge-de-alloceerd vanuit een destructor.
+  Elke bron of voorraad die het programma nodig heeft, heeft altijd één en slechts één object als eigenaar. 
+</em>
+</blockquote>
+
+<p>
+  Bronnen en voorraden zijn items die het programma alloceert en de-alloceert. Voorbeelden zijn
+  files, geheugen, locks en semaphoren. Het is belangrijk dat de bronnen netjes weer worden vrijgegeven
+  als het programma ze niet meer nodig heeft. Ook als er excepties optreden. Om ervoor te zorgen dat dit
+  ook daadwerkelijk gebeurt moet de aanvraag en het vrijgeven worden gekoppeld aan de levensduur van
+  het object dat de bronnen beheert. Dit wordt gedaan door aanvraag te doen in de constructor en 
+  vrijgave in de destructor. De destructor wordt namelijk ook aangeroepen als er excepties optreden zodat
+  er ook in dat geval geen 'lekken' optreden.
+<br>
+  Problemen kunnen optreden als er resources moeten worden gedeeld. Gedeelde resources kunnen in dat
+  geval het beste worden beheerd door een derde object: de resource 'beheerder'. Dit object is dan
+  verantwoordelijk voor het vrijgeven van de bronnen zodra de laatste gebruiker de bron niet meer nodig heeft.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>

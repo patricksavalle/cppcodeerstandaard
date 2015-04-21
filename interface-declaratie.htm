@@ -1,0 +1,146 @@
+<html>
+<head>
+<title>
+  Regel: interface-declaratie
+</title>
+<link rel="stylesheet" type="text/css" href="codingstandard.css">
+</head>
+<body>
+<script language="javascript">
+if (self==parent)
+{
+  document.write('<META HTTP-EQUIV="refresh" CONTENT="0; URL=index.htm?interface-declaratie.htm">')
+}
+</script>
+<hr>
+<p>
+<strong>
+	Codeerstandaard voor C++
+</strong>
+</p>
+<hr>
+
+<a name="Regel_interface_declaratie">
+<h1>
+  Regel: interface-declaratie
+</h1>
+</a>
+    
+<blockquote>
+<em>
+  Een declaratiebestand mag slechts declaraties bevatten, géén definities.
+</em>
+</blockquote>
+
+<p>
+  Als een declaratiebestand namelijk definities bevat, zullen deze op 
+  elke plek waar het bestand wordt geïnclude, worden geïnstantieerd. 
+  Uiteindelijk zal dit kunnen leiden tot fouten. 
+  Voorbeelden van fouten zijn:
+</p>
+
+<p>
+(someclass.h)
+</p>
+
+<pre>  // declaration error 1.
+  const char* const SOMECONST = "Peach";
+
+  // declaration error 2.
+  static const char* const SOMEOTHERCONST = "Apple";
+
+  // declaration error 3.
+  using namespace std;
+
+  class SomeClass
+  {
+    public:
+      // declaration error 4.
+      void SomeFunction( string text = "default" );
+
+      // declaration error 5.
+      void SomeOtherFunction()
+      {
+        // bla bla
+      }
+  };
+
+  // declaration error 6.
+  void SomeFunction()
+  {
+    // bla bla
+  }
+
+  // declaration error 7.
+  static void SomeOtherFunction()
+  {
+    // bla bla
+  }
+</pre>
+
+<p>
+  Declaratie 1 zal linkerfouten veroorzaken. Elke compilatie-eenheid die het declaratiebestand 
+  direct of indirect gebruikt zal namelijk een instantie van de variabele SOMECONST bevatten. 
+  Tijdens het linken zal de linker dan klagen over 'duplicate symbols'. De oplossing is:
+</p>
+<p>
+  (module.h)
+</p>
+<pre>  extern const char* const SOMECONST;
+</pre>
+<p>
+  (module.cpp)
+</p>
+<pre>  const char* const SOMECONST = "Peach";
+</pre>
+<p>
+  Declaratie 2 zal geen zichtbare fouten veroorzaken, maar elke compilatie-eenheid 
+  die dit declaratiebestand gebruikt zal een instantie van de variabele krijgen, 
+  ook al wordt deze niet gebruikt. In dit geval zal de linker geen fouten 
+  rapporteren omdat de symbolen static zijn gedeclareerd. Het programma zal niet 
+  werken zoals verwacht. Een oplossing is er niet, het is een verkeerde constructie. 
+  De declaratie moest waarschijnlijk in het definitiebestand worden geplaatst. 
+  Zie ook: 'Regel: lokale/module-scope declaraties''.
+</p>
+<p>
+  Declaratie 3 zal de kans op naamsconflicten vergroten, elk declaratiebestand 
+  dat de betreffende declaratie leest zal vanaf dat punt de symbolen in de 
+  betreffende namespace kunnen gebruiken zonder de 'fully-qualified names' 
+  te hoeven gebruiken. Als deze declaratie voor meerdere namespaces wordt 
+  gebruikt, zullen deze namespaces geen symbolen met de dezelfde naam mogen bevatten 
+  en heeft het gebruik van namespaces geen zin. Zie ook: Regel: using-statements in 
+  declaratiebestanden.
+</p>
+<p>
+  Declaratie 4 is niet fout maar betekent wel dat de waarde van het 
+  default-argument niet kan worden gewijzigd zonder dat afhankelijke 
+  bestanden opnieuw moeten worden gecompileerd. 
+  Zie 'Regel: default-argumentwaarden' voor een betere oplossing.
+</p>
+<p>
+  Declaratie 5 is een default inline-definitie en daarvoor 
+  geldt 'Regel: inline member-functies' .
+</p>
+<p>
+  Declaratie 6 is eenzelfde soort constructie als declaratie 1. Voor deze 
+  declaratie geldt ook dat elke compilatie-eenheid die deze declaratie 
+  leest een instantie van het symbool (de functie) zal bevatten. Net 
+  als voor declaratie 1 geldt dat dit zal leiden tot dubbele symbolen 
+  tijdens het linken. 
+</p>
+<p>
+  Declaratie 7 is net als declaratie 2 fout omdat elke compilatie-eenheid 
+  die dit declaratiebestand gebruikt een instantie van de variabele zal 
+  krijgen. Zie ook: 'Regel: lokale/module-scope declaraties'.
+</p>
+
+<hr>
+
+<p>
+	Uit "Van UML naar C++", Academic Service, ISBN 90 395 1279 5
+</p>
+
+<hr>
+
+</body>
+</html>
